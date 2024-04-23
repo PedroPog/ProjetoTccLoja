@@ -1,7 +1,12 @@
+using LojaCamisa.Repository;
+using LojaCamisa.Repository.Interface;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IUsuarioRepository, Usuariorepository>();
 
 var app = builder.Build();
 
