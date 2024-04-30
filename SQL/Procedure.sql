@@ -31,7 +31,7 @@ END $$
 
 CALL GerenciarUsuario('INSERT', null, 'Pedro', 'pedor@email.com', '123456', 1, 1);
 CALL GerenciarUsuario('UPDATE', 1, 'Pedro Henrique', 'pedro@email.com', '123456', 2, 2);
-CALL GerenciarUsuario('DELETE', 1, NULL, NULL, NULL, NULL, NULL);
+/*CALL GerenciarUsuario('DELETE', 1, NULL, NULL, NULL, NULL, NULL);*/
 
 DELIMITER $$
 
@@ -65,7 +65,7 @@ END $$
 
 CALL GerenciarFormaPagamento('INSERT', NULL, 'PEDRO HENRIQUE', 4021592347403027, '123', '12/24', 1);
 CALL GerenciarFormaPagamento('UPDATE', 1, 'PEDRO HENRIQUE VIEIRA DE FREITAS', 1234567890123456, '123', '12/24', 1);
-CALL GerenciarFormaPagamento('DELETE', 1, NULL, NULL, NULL, NULL, NULL);
+/*CALL GerenciarFormaPagamento('DELETE', 1, NULL, NULL, NULL, NULL, NULL);*/
 
 DELIMITER $$
 
@@ -101,7 +101,7 @@ END $$
 
 CALL GerenciarEndereco('INSERT', NULL, 1, 'Rua Principal', 'Apto 101', '12345678', '11987654321', TRUE);
 CALL GerenciarEndereco('UPDATE', 1, 1, 'Rua Atualizada', 'Apto 202', '12345678', '11987654321', TRUE);
-CALL GerenciarEndereco('DELETE', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+/*CALL GerenciarEndereco('DELETE', 1, NULL, NULL, NULL, NULL, NULL, NULL);*/
 
 
 DELIMITER $$
@@ -125,7 +125,7 @@ END $$
 
 CALL GerenciarMarca('INSERT', NULL, 'Nova Marca');
 CALL GerenciarMarca('UPDATE', 1, 'Marca Atualizada');
-CALL GerenciarMarca('DELETE', 1, NULL);
+/*CALL GerenciarMarca('DELETE', 1, NULL);*/
 
 DELIMITER $$
 
@@ -148,7 +148,7 @@ END $$
 
 CALL GerenciarModalidade('INSERT', NULL, 'Nova Modalidade');
 CALL GerenciarModalidade('UPDATE', 1, 'Modalidade Atualizada');
-CALL GerenciarModalidade('DELETE', 1, NULL);
+/*CALL GerenciarModalidade('DELETE', 1, NULL);*/
 
 
 DELIMITER $$
@@ -194,4 +194,74 @@ END $$
 CALL GerenciarProduto('INSERT', NULL, 'Nome do Produto', 'Descrição do Produto', '2024-04-30', 100, 50.00, 1, 1, TRUE, 1);
 CALL GerenciarProduto('UPDATE', 1, 'Novo Nome', 'Nova Descrição', '2024-04-30', 200, 75.00, 2, 2, FALSE, 2);
 CALL GerenciarProduto('ESTOQUE', 1,null, null, null, 200,null,null,null,null,null);
-CALL GerenciarProduto('DELETE', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+/*CALL GerenciarProduto('DELETE', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);*/
+
+
+DELIMITER $$
+
+CREATE PROCEDURE GerenciarItensPedido(
+    IN operacao VARCHAR(10),
+    IN id_item INT,
+    IN id_usuario INT,
+    IN nome_produto VARCHAR(30),
+    IN quantidade INT,
+    IN preco_unitario DECIMAL(10,2)
+)
+BEGIN
+    IF operacao = 'INSERT' THEN
+        INSERT INTO itens_pedido (idusuario, nomeproduto, quantidade, preco_unitario)
+        VALUES (id_usuario, nome_produto, quantidade, preco_unitario);
+    ELSEIF operacao = 'UPDATE' THEN
+        UPDATE itens_pedido
+        SET idusuario = id_usuario,
+            nomeproduto = nome_produto,
+            quantidade = quantidade,
+            preco_unitario = preco_unitario
+        WHERE iditem = id_item;
+    ELSEIF operacao = 'DELETE' THEN
+        DELETE FROM itens_pedido WHERE iditem = id_item;
+    ELSEIF operacao = 'ESTOQUE' THEN
+        UPDATE itens_pedido
+        SET quantidade = quantidade
+        WHERE iditem = id_item;
+    ELSE
+        SELECT 'Operação inválida';
+    END IF;
+END $$
+
+CALL GerenciarItensPedido('INSERT', NULL, 1, 'Produto A', 10, 5.99);
+CALL GerenciarItensPedido('UPDATE', 1, 1, 'Produto A Atualizado', 15, 6.99);
+/*CALL GerenciarItensPedido('DELETE', 1, NULL, NULL, NULL, NULL);*/
+CALL GerenciarItensPedido('ESTOQUE', 2, NULL, NULL, 20, NULL);
+
+DELIMITER $$
+
+CREATE PROCEDURE GerenciarPedido(
+    IN operacao VARCHAR(10),
+    IN id_pedido INT,
+    IN valor_total DECIMAL(10,2),
+    IN id_usuario INT,
+    IN sts_pedido INT
+)
+BEGIN
+    IF operacao = 'INSERT' THEN
+        INSERT INTO pedido (valor_total, idusuario, sts)
+        VALUES (valor_total, id_usuario, sts_pedido);
+    ELSEIF operacao = 'UPDATE' THEN
+        UPDATE pedido
+        SET valor_total = valor_total,
+            idusuario = id_usuario,
+            sts = sts_pedido
+        WHERE idpedido = id_pedido;
+    ELSEIF operacao = 'DELETE' THEN
+        DELETE FROM pedido WHERE idpedido = id_pedido;
+    ELSE
+        SELECT 'Operação inválida';
+    END IF;
+END $$
+
+CALL GerenciarPedido('INSERT', NULL, 100.00, 1, 1);
+CALL GerenciarPedido('UPDATE', 1, 150.00, 1, 2);
+/*CALL GerenciarPedido('DELETE', 1, NULL, NULL, NULL);*/
+
+
