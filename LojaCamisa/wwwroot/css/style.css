@@ -1,0 +1,141 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    width: 100%;
+    height: 100%;
+}
+header{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 10vh;
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    color: #fff;
+    transition: all .2s;
+    z-index: 1;
+}
+
+ nav{
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+h1{
+    margin-bottom: 0;
+}
+ul{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+    width: 50%;
+    margin-bottom: 0;
+}
+ul li{
+    list-style: none;
+}
+ul li a{
+    font-size: 20px;
+    color: white;
+}
+
+.logo{
+    width: 50%;
+}
+.link{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin-right: 20px;
+} 
+
+#home{
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/home.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+.div-button{
+    margin-bottom: 40px;
+    width: 20%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+
+}
+
+.marcas{
+    background-color: rgb(138, 138, 138);
+    height: 12vh;
+    display: flex;
+    justify-content: space-around;
+}
+.marcas img{
+    width: 100px;
+    object-fit: contain;
+
+}
+.button{
+    width: 60%;
+    padding: 0;
+}
+
+.futebol{
+ 
+    height: 50vh;
+
+    align-items: center;
+}
+
+
+
+#produtos{
+    width: 100%;  
+}
+
+
+.swiper {
+    width: 600px;
+    height: 300px;
+  }
+
+.itens{
+    display: flex;
+    justify-content: space-around;
+}
+.categoria{
+    margin-top: 40px;
+  
+}
+.categoria h2{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid black;
+    border-radius: 0px 0px 4px 4px;
+}
+.text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
