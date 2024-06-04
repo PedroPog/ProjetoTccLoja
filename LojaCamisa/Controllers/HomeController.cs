@@ -1,4 +1,5 @@
 using LojaCamisa.Models;
+using LojaCamisa.Repository.Interface.Contract;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,27 +7,32 @@ namespace LojaCamisa.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private IProdutoRepository _produtoRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProdutoRepository produtoRepository)
         {
-            _logger = logger;
+            _produtoRepository = produtoRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(_produtoRepository.ObterTodosProdutos());
+        }
+        public IActionResult DetalhesProdutos(int id)
+        {
+            return View(_produtoRepository.ObterProduto(id));
         }
 
-        public IActionResult Privacy()
+        public IActionResult Login()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost]
+        public IActionResult FiltrarPorMarca(string marcaSelecionada)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("index");
         }
+
     }
 }

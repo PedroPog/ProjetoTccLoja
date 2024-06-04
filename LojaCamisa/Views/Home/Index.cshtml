@@ -1,8 +1,97 @@
-﻿@{
+﻿@model IEnumerable<LojaCamisa.Models.Produtos>
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="banner">
+    <img class="img-banner" src="~/assets/banner/banner.png" alt="Banner01" />
 </div>
+<div class="marcas">
+    <div class="marcas-slide">
+        <img class="img-slide" src="~/assets/img/newbalance.png" alt="New Balance" data-brand="New Balance">
+        <img class="img-slide" src="~/assets/img/mizuno.png" alt="Mizuno" data-brand="Mizuno">
+        <img class="img-slide" src="~/assets/img/jordan.png" alt="Jordan" data-brand="Jordan">
+        <img class="img-slide" src="~/assets/img/puma.png" alt="Puma" data-brand="Puma">
+        <img class="img-slide" src="~/assets/img/nike.png" alt="Nike" data-brand="Nike">
+        <img class="img-slide" src="~/assets/img/adidas.png" alt="Adidas" data-brand="Adidas">
+    </div>
+</div>
+<section id="produtos">
+    <div class="promocoes">
+        <h2>PROMOÇÕES</h2>
+        <div class="itens">
+            <div class="card">
+                <img class="card-img-top" src="https://place-hold.it/250" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://place-hold.it/250" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="produtosGeral">
+        @foreach (var item in Model)
+        {
+            <div class="card" style="width: 18rem;">
+                @if (item.imagem != null && item.imagem.Count > 0)
+                {
+                    <div class="image-container" onmouseover="changeImage(this, true)" onmouseout="changeImage(this, false)">
+                        <img class="card-img-top main-img" src="/imagens/@item.imagem[0]" alt="@item.nomeProduto"
+                             data-holder-rendered="true" style="width: 260px; height: 300px">
+                        @if (item.imagem.Count > 1)
+                        {
+                            <img class="card-img-top hover-img" src="/imagens/@item.imagem[1]" alt="@item.nomeProduto"
+                                 data-holder-rendered="true" style="width: 260px; height: 300px; display: none;">
+                        }
+                    </div>
+                }
+                else
+                {
+                    <img class="card-img-top" src="https://place-hold.it/300" alt="@item.nomeProduto" data-holder-rendered="true">
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@item.nomeProduto</h5>
+                    <p class="card-text">R$ @item.preco</p>
+                    @if (item.quantidade > 0)
+                    {
+                        <div class="text-center">
+                            <a asp-controller="Home" asp-action="DetalhesProdutos" asp-route-id="@item.idProduto" class="btn btn-info text-white">Detalhes</a>
+                            <a href="#" class="btn btn-primary text-white material-symbols-outlined">
+                                add_shopping_cart
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn-primary disabled">Indisponível</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function changeImage(element, isHover) {
+            var mainImg = element.querySelector('.main-img');
+            var hoverImg = element.querySelector('.hover-img');
+
+            if (isHover) {
+                if (hoverImg) {
+                    mainImg.style.display = 'none';
+                    hoverImg.style.display = 'block';
+                }
+            } else {
+                if (hoverImg) {
+                    mainImg.style.display = 'block';
+                    hoverImg.style.display = 'none';
+                }
+            }
+        }
+    </script>
+}

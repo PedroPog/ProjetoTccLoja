@@ -1,0 +1,114 @@
+﻿@model LojaCamisa.Models.Produtos
+
+@{
+    ViewData["Title"] = "DetalhesProdutos";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="productCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    @if (Model.imagem != null && Model.imagem.Count > 0)
+                    {
+                        for (int i = 0; i < Model.imagem.Count; i++)
+                        {
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <img class="d-block w-100" src="/imagens/@Model.imagem[i]" alt="Imagem @i de @Model.nomeProduto" style="max-height: 500px; object-fit: contain;">
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="https://place-hold.it/400x500" alt="Imagem não disponível" style="max-height: 500px; object-fit: cover;">
+                        </div>
+                    }
+                </div>
+                @if (Model.imagem != null && Model.imagem.Count > 1)
+                {
+                    <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="carousel-control-next" href="#productCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Próximo</span>
+                    </a>
+                }
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1 class="product-title-detalhes">@Model.nomeProduto</h1>
+            <p class="product-description">@Model.descricao</p>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.lancamento)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.lancamento)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.quantidade)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.quantidade)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.preco)
+                </dt>
+                <dd class="col-sm-8">
+                    <strong>R$ @Model.preco.ToString("F2")</strong>
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.marca)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.marca)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.nacional)
+                </dt>
+                <dd class="col-sm-8">
+                    @if (Model.nacional)
+                    {
+                        <strong>Nacional</strong>
+                    }else{
+                        <strong>Estrageiro</strong>
+                    }
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.modalidade)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.modalidade)
+                </dd>
+            </dl>
+            <div class="product-actions-detalhes mt-4">
+                @if(Model.status){
+                    @if (Model.quantidade > 0)
+                    {
+                        <button class="btn btn-primary btn-lg">Adicionar ao Carrinho</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-secondary btn-lg" disabled>Indisponível</button>
+                    }
+                }
+                else
+                {
+                    <button class="btn btn-warn btn-lg" disabled>Fora de Estoque</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#productCarousel').carousel();
+        });
+    </script>
+}

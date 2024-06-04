@@ -7,7 +7,41 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.3.0" />
+    <PackageReference Include="BootstrapIcons.AspNetCore" Version="1.11.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="MySql.Data" Version="8.4.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\.DS_Store" />
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\css\.DS_Store" />
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\ui-design\.DS_Store" />
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\ui-design\icons\.DS_Store" />
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\ui-design\icons\32x32-transparent\.DS_Store" />
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\ui-design\icons\64x64-transparent\.DS_Store" />
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\ui-design\icons\64x64-white\.DS_Store" />
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\ui-design\icons\svg\.DS_Store" />
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\ui-design\shots\.DS_Store" />
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\ui-ecommerce\fonts\fontawesome\.DS_Store" />
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\ui-ecommerce\sass\.DS_Store" />
+    <None Include="wwwroot\resources\lib\bootstrap-ecommerce-uikit\ui-ecommerce\sass\ui-assets\helpers\.DS_Store" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Adm\Controllers\" />
+    <Folder Include="Areas\Adm\Data\" />
+    <Folder Include="Areas\Adm\Models\" />
+    <Folder Include="Areas\Adm\Views\Home\" />
+    <Folder Include="Areas\Cliente\Controllers\" />
+    <Folder Include="Areas\Cliente\Data\" />
+    <Folder Include="Areas\Cliente\Models\" />
+    <Folder Include="Areas\Cliente\Views\" />
+    <Folder Include="Libraries\Login\" />
+    <Folder Include="Libraries\Middleware\" />
+    <Folder Include="Libraries\Sessao\" />
+    <Folder Include="Repository\Utils\" />
   </ItemGroup>
 
 </Project>

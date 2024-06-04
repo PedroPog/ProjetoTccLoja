@@ -55,16 +55,35 @@ CREATE TABLE produto
  idproduto INT PRIMARY KEY AUTO_INCREMENT,  
  nome VARCHAR(30),  
  descricao VARCHAR(100),  
- lancamento DATE,  
+ lancamento VARCHAR(10),  
  quantidade INT NOT NULL DEFAULT 0,  
- preco DECIMAL(10,2) NOT NULL,  
- sts INT NOT NULL,  
- marca INT NOT NULL,  
+ preco double NOT NULL,  
+ sts BOOLEAN NOT NULL,  
+ idmarca INT NOT NULL,  
  nacional BOOLEAN NOT NULL,  
  idmodalidade INT NOT NULL,
- FOREIGN KEY(marca) REFERENCES marca (idmarca),
+ FOREIGN KEY(idmarca) REFERENCES marca (idmarca),
  FOREIGN KEY(idmodalidade) REFERENCES modalidade (idmodalidade)
 ); 
+
+CREATE TABLE imagens 
+( 
+ idimagem INT PRIMARY KEY AUTO_INCREMENT,
+ idproduto INT not null,
+ urlimagem VARCHAR(255) NOT NULL,  
+ FOREIGN KEY(idproduto) REFERENCES produto (idproduto)
+); 
+
+INSERT INTO marca (nome_marca) VALUES ('Nike');
+INSERT INTO marca (nome_marca) VALUES ('Adidas');
+INSERT INTO marca (nome_marca) VALUES ('Puma');
+INSERT INTO marca (nome_marca) VALUES ('Under Armour');
+
+INSERT INTO modalidade (nome_modalidade) VALUES ('Futebol');
+INSERT INTO modalidade (nome_modalidade) VALUES ('Basketball');
+INSERT INTO modalidade (nome_modalidade) VALUES ('Vôlei');
+
+
 
 CREATE TABLE itens_pedido 
 ( 

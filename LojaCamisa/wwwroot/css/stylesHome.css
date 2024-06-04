@@ -1,0 +1,90 @@
+﻿.banner {
+    display: flex;
+    overflow: auto;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin-bottom: 2%;
+}
+.img-banner{
+    width:100%;
+}
+.marcas {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 1% 0;
+    scrollbar-width: none; /* Firefox */
+}
+
+    .marcas::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+
+.marcas-slide {
+    display: flex;
+    gap: 5%;
+    justify-content: center;
+    height: 15vh;
+    overflow: auto;
+    padding-left: 10vw;
+
+}
+.marcas-slide::-webkit-scrollbar{
+    
+}
+
+.img-slide {
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.5;
+    scale:0.8;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+    .img-slide:hover {
+        scale: 1.0;
+        opacity: 1.0;
+        cursor: pointer;
+    }
+
+
+.promocoes{
+    h2{
+        font-size: 2.3rem;
+        color: var(--primary-color);
+        font-weight: 900;
+        text-align: center;
+    }
+    .itens {
+        background: var(--primary-color);
+        width: 100%;
+        position: unset;
+        display: flex;
+        padding: 1% 2%;
+        gap: 1%;
+        overflow:auto;
+    }
+}
+
+.produtosGeral {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 2%;
+}
+.card {
+    width: calc(25% - 10px); /* 4 items per row */
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.card-img-top {
+    object-fit: contain;
+}
+@media screen and (max-width: 600px) {
+    .card {
+        width: calc(50% - 10px); /* 2 items per row on smaller screens */
+    }
+}

@@ -151,50 +151,6 @@ CALL GerenciarModalidade('UPDATE', 1, 'Modalidade Atualizada');
 /*CALL GerenciarModalidade('DELETE', 1, NULL);*/
 
 
-DELIMITER $$
-
-CREATE PROCEDURE GerenciarProduto(
-    IN operacao VARCHAR(10),
-    IN id_produto INT,
-    IN nome_produto VARCHAR(30),
-    IN descricao_produto VARCHAR(100),
-    IN lancamento_produto DATE,
-    IN quantidade_produto INT,
-    IN preco_produto DECIMAL(10,2),
-    IN sts_produto INT,
-    IN id_marca INT,
-    IN nacional_produto BOOLEAN,
-    IN id_modalidade INT
-)
-BEGIN
-    IF operacao = 'INSERT' THEN
-        INSERT INTO produto (nome, descricao, lancamento, quantidade, preco, sts, marca, nacional, idmodalidade)
-        VALUES (nome_produto, descricao_produto, lancamento_produto, quantidade_produto, preco_produto, sts_produto, id_marca, nacional_produto, id_modalidade);
-    ELSEIF operacao = 'UPDATE' THEN
-        UPDATE produto
-        SET nome = nome_produto,
-            descricao = descricao_produto,
-            lancamento = lancamento_produto,
-            quantidade = quantidade_produto,
-            preco = preco_produto,
-            sts = sts_produto,
-            marca = id_marca,
-            nacional = nacional_produto,
-            idmodalidade = id_modalidade
-        WHERE idproduto = id_produto;
-    ELSEIF operacao = 'DELETE' THEN
-        DELETE FROM produto WHERE idproduto = id_produto;
-	elseif operacao = 'ESTOQUE' THEN
-		UPDATE produto SET quantidade = quantidade_produto;
-    ELSE
-        SELECT 'Operação inválida';
-    END IF;
-END $$
-
-CALL GerenciarProduto('INSERT', NULL, 'Nome do Produto', 'Descrição do Produto', '2024-04-30', 100, 50.00, 1, 1, TRUE, 1);
-CALL GerenciarProduto('UPDATE', 1, 'Novo Nome', 'Nova Descrição', '2024-04-30', 200, 75.00, 2, 2, FALSE, 2);
-CALL GerenciarProduto('ESTOQUE', 1,null, null, null, 200,null,null,null,null,null);
-/*CALL GerenciarProduto('DELETE', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);*/
 
 
 DELIMITER $$

@@ -1,22 +1,115 @@
+:root {
+    --primary-color: #005248;
+    --secondary-color: #4B8178;
+    --tertiary-color: #C3FCF2;
+    --highlight-color: #57d1bd;
+    --highlight-hover-color: #C3FCF2;
+}
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    font-family: "Montserrat", sans-serif;
+    user-select:none;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.header-bg {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    background-color: #005248;
+}
+
+.navbar-collapse {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.menu-1,
+.menu-2 {
+    display: flex;
+    align-items: center;
+}
+
+.menu-1 {
+    flex-grow: 1;
+    justify-content: flex-start;
+}
+
+.menu-2 {
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.item-drop {
+    font-size: 1.4vw;
+    display: flex;
+    align-items: center;
+}
+
+.item-nav {
+    color: #4B8178;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+    .logo img {
+        width: 15vw;
+    }
+
+.login {
+    color: #57d1bd !important;
+}
+
+.login:hover {
+   color: #C3FCF2 !important;
+}
+
+
+footer {
+    background-color: var(--primary-color) !important;
+    color: white;
+    padding: 20px 0;
+    margin-top: 3rem !important;
+    position: absolute;
+    width: 100%;
+}
+
+.dropdown-menu {
+    background-color: var(--primary-color);
+}
+.dropdown-item {
+    color: var(--secondary-color) !important;
+}
+.dropdown-item:focus {
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-color) !important;
+}
+.dropdown-item:hover {
+    background-color: var(--secondary-color) !important;
+    color: var(--tertiary-color) !important;
 }
