@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject LojaCamisa.Libraries.Login.LoginUsuario _usuario
+
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
@@ -27,17 +29,36 @@
                 </div>
                 <ul class="menu-2 navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle item-drop login" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="material-symbols-outlined">
-                                person
-                            </span>
-                            Entrar
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Login</a></li>
-                            <li><a class="dropdown-item" href="#">Perfil</a></li>
-                            <li><a class="dropdown-item" href="#">Carrinho</a></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        @if (_usuario.GetCliente() != null)
+                        {
+                            <a class="nav-link dropdown-toggle item-drop login" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-symbols-outlined">
+                                    person
+                                </span>
+                                @_usuario.GetCliente().nome
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="nav-link item-drop login" role="button" asp-action="Login" asp-area="" asp-controller="Home">
+                                <span class="material-symbols-outlined">
+                                    person
+                                </span>
+                                Entrar
+                            </a>
+                        }
+                        
+                        <ul class="dropdown-menu">                   
+                            @if(_usuario.GetCliente() != null)
+                            {
+                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                @if (_usuario.GetCliente().tipo == 1)
+                                {
+                                    <li><a class="dropdown-item" asp-action="Index" asp-area="Adm" asp-controller="Home">Area Restrita</a></li>
+                                }
+                                <li><a class="dropdown-item" asp-action="Carrinho" asp-area="" asp-controller="Home">Carrinho</a></li>
+                                <li><a class="dropdown-item" asp-action="LogoutCliente" asp-area="" asp-controller="Home">Logout</a></li>
+                            }
                         </ul>
                     </li>
                 </ul>
@@ -52,7 +73,7 @@
         </main>
     </div>
 
-    <footer class="mt-5">
+    <footer class="mt-5 bottom-0">
         <div class="container">
             <div class="row py-4">
                 <div class="col-md-4">
@@ -83,7 +104,6 @@
                         <li class="list-inline-item"><a class="link text-white" href="#">Brasil</a></li>
                         <li class="list-inline-item"><a class="link text-white" href="#">Termos de uso</a></li>
                         <li class="list-inline-item"><a class="link text-white" href="#">Política de privacidade</a></li>
-                        <li class="list-inline-item"><a class="link text-white" asp-action="Adm" asp-controller="HomeAdm" asp-action="Index">Area Retrista</a></li>
                     </ul>
                 </div>
                 <div class="col-md-6 text-md-end">

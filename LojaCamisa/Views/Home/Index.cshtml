@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<LojaCamisa.Models.Produtos>
+@inject LojaCamisa.Libraries.Login.LoginUsuario _usuario
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -60,9 +62,19 @@
                     {
                         <div class="text-center">
                             <a asp-controller="Home" asp-action="DetalhesProdutos" asp-route-id="@item.idProduto" class="btn btn-info text-white">Detalhes</a>
-                            <a href="#" class="btn btn-primary text-white material-symbols-outlined">
-                                add_shopping_cart
-                            </a>
+                            @if (_usuario.GetCliente() != null)
+                            {
+                                <a asp-controller="Home" asp-action="AdicionarItem" asp-route-id="@item.idProduto" class="btn btn-primary text-white material-symbols-outlined">
+                                    add_shopping_cart
+                                </a>
+                            }
+                            else
+                            {
+                                <a onclick="showLoginAlert(event)" class="btn btn-primary text-white material-symbols-outlined">
+                                    add_shopping_cart
+                                </a>
+                            }
+
                         </div>
                     }
                     else
@@ -92,6 +104,12 @@
                     hoverImg.style.display = 'none';
                 }
             }
+        }
+        function showLoginAlert(event) {
+            event.preventDefault();
+            alert('Por favor, faça login para adicionar itens ao carrinho.');
+            // Redirecionar para a página de login após o alerta, se necessário
+            window.location.href = '@Url.Action("Login", "Home")';
         }
     </script>
 }

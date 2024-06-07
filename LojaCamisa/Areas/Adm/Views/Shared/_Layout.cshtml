@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using LojaCamisa.Models.Constant
+@inject LojaCamisa.Libraries.Login.LoginUsuario _usuario
+
+
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
@@ -40,10 +44,9 @@
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Painel</a>
         <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
         <ul class="navbar-nav px-3">
-            @* <li class="nav-item text-nowrap">
-            <a class="nav-link" asp-area="Colaborador" asp-action="Logout" asp-controller="Home"><span>@_colaborador.GetColaborador().Nome </span> Sair</a>
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" asp-area="" asp-action="Logout" asp-controller="Home"><span>@_usuario.GetCliente().nome </span> Sair</a>
             </li>
-            *@
         </ul>
     </nav>
 
@@ -53,7 +56,7 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" asp-action="Painel">
+                            <a class="nav-link active" asp-controller="Home" asp-action="Index">
                                 <span data-feather="home"></span>
                                 Painel de Controle
                             </a>

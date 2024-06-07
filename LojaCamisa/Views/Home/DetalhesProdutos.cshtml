@@ -1,4 +1,5 @@
 ﻿@model LojaCamisa.Models.Produtos
+@inject LojaCamisa.Libraries.Login.LoginUsuario _usuario
 
 @{
     ViewData["Title"] = "DetalhesProdutos";
@@ -89,7 +90,14 @@
                 @if(Model.status){
                     @if (Model.quantidade > 0)
                     {
-                        <button class="btn btn-primary btn-lg">Adicionar ao Carrinho</button>
+                        @if (_usuario.GetCliente() != null)
+                        {
+                            <a asp-controller="Home" asp-action="AdicionarItem" asp-route-id="@Model.idProduto" class="btn btn-primary btn-lg">Adicionar ao Carrinho</a>
+                        }
+                        else
+                        {
+                            <button onclick="showLoginAlert(event)" class="btn btn-primary btn-lg">Adicionar ao Carrinho</button>
+                        }
                     }
                     else
                     {
@@ -110,5 +118,12 @@
         $(document).ready(function () {
             $('#productCarousel').carousel();
         });
+
+        function showLoginAlert(event) {
+            event.preventDefault();
+            alert('Por favor, faça login para adicionar itens ao carrinho.');
+            // Redirecionar para a página de login após o alerta, se necessário
+            window.location.href = '@Url.Action("Login", "Home")';
+        }
     </script>
 }

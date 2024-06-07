@@ -1,0 +1,111 @@
+﻿@model IEnumerable<LojaCamisa.Models.ProdutoCarrinho>
+
+@{
+    ViewData["Title"] = "Carrinho";
+    double SubTotal = 0;
+    bool isCarrinhoVazio = !Model.Any();
+}
+
+
+<div class="row">
+    <!-- Coluna do Carrinho -->
+    <div class="col-md-8 scrollable-column" style="padding-left: 3vw;">
+        <h3>Meu Carrinho</h3>
+        @foreach (var produto in Model)
+        {
+            <div class="card mb-3 m-auto shadow-sm" style="width: 35rem;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="/imagens/@produto.imagem" class="img-fluid rounded-start" alt="Imagem do Produto">
+                    </div>
+                    <div class="col-md-8 position-relative">
+                        <div class="card-body">
+                            <h2 class="card-title text-uppercase">@produto.nomeProduto</h2>
+                            <p class="card-text"><strong>Preço:</strong> @produto.preco.ToString("C")</p>
+                        </div>
+                        <a asp-controller="Home" asp-action="RemoverProduto" asp-route-id="@produto.idProduto"
+                           class="btn btn-danger position-absolute top-0 end-0 m-2" onclick="removerProduto('@produto.idProduto')">X</a>
+
+                    </div>
+                </div>
+                <div class="card-footer d-flex">
+                    <div class="d-flex align-items-center w-85">
+                        <span>Quantidade: </span>
+                        <button class="btn btn-outline-secondary rounded-circle mx-3" aria-label="Diminuir a quantidade" style="width:3vw;" onclick="atualizarQuantidade(this, @produto.idProduto, -1)">-</button>
+                        <input type="number" class="form-control text-center mx-2" value="@produto.quantidade" min="1" style="width: 60px;" aria-label="Quantidade do produto" onchange="atualizarQuantidadeDiretamente(this, @produto.idProduto)" />
+                        <button class="btn btn-outline-secondary rounded-circle mx-3" aria-label="Aumentar a quantidade" style="width:3vw;" onclick="atualizarQuantidade(this, @produto.idProduto, 1)">+</button>
+                    </div>
+                    <div class="d-flex w-25 align-items-center justify-content-end">
+                        <span class="card-text fw-bold" id="subtotal-@produto.idProduto" data-preco="@produto.preco">R$ @(produto.quantidade * produto.preco)</span>
+                    </div>
+                </div>
+            </div>
+            SubTotal += produto.quantidade * produto.preco;
+        }
+        @if (isCarrinhoVazio)
+        {
+            <div class="d-flex justify-content-center align-items-center text-secondary" style="height: 80vh;">
+                <h2>Carrinho vazio</h2>
+            </div>
+        }
+    </div>
+
+    <!-- Coluna Fixa do Resumo -->
+    <div class="col-md-4 fixed-column p-4">
+        <h3>Resumo da Compra</h3>
+        <p><strong>Subtotal:</strong> <span id="totalSubtotal">@SubTotal.ToString("C")</span></p>
+        <!--<p>Frete: Calcular</p>-->
+        <div class="mb-3">
+            <label for="cupom" class="form-label fw-bold">Cupom de Desconto</label>
+            <input type="text" class="form-control" id="cupom" placeholder="Digite seu cupom">
+        </div>
+        <button asp-controller="Home" asp-action="Index" type="button" class="btn btn-primary w-100">Finalizar Compra</button>
+        <button asp-controller="Home" asp-action="Index" type="button" class="btn w-100">Escolher Mais Produtos</button>
+    </div>
+</div>
+
+<script>
+    function atualizarQuantidade(element, idProduto, delta) {
+        var quantidadeInput = element.parentElement.querySelector('input[type="number"]');
+        var quantidade = parseInt(quantidadeInput.value) + delta;
+        if (quantidade < 1) quantidade = 1;
+        quantidadeInput.value = quantidade;
+        atualizarSubtotal(idProduto, quantidade);
+    }
+
+    function atualizarQuantidadeDiretamente(element, idProduto) {
+        var quantidade = parseInt(element.value);
+        if (quantidade < 1) {
+            quantidade = 1;
+            element.value = quantidade;
+        }
+        atualizarSubtotal(idProduto, quantidade);
+    }
+
+    function atualizarSubtotal(idProduto, quantidade) {
+        var subtotalElement = document.querySelector(`#subtotal-${idProduto}`);
+        var preco = parseFloat(subtotalElement.dataset.preco);
+        var novoSubtotal = (quantidade * preco).toFixed(2);
+        subtotalElement.textContent = `R$ ${novoSubtotal}`;
+
+        atualizarTotalSubtotal();
+    }
+
+    function atualizarTotalSubtotal() {
+        var subtotais = document.querySelectorAll('[id^="subtotal-"]');
+        var total = 0;
+        subtotais.forEach(function (element) {
+            total += parseFloat(element.textContent.replace('R$ ', ''));
+        });
+        document.getElementById('totalSubtotal').textContent = `R$ ${total.toFixed(2)}`;
+    }
+
+    function removerProduto(idProduto) {
+        // Aqui você pode fazer uma requisição para remover o produto do carrinho no servidor
+        // Após a remoção, atualize a UI removendo o card do produto
+        var card = document.querySelector(`#subtotal-${idProduto}`).closest('.card');
+        card.remove();
+        atualizarTotalSubtotal();
+        
+    }
+</script>

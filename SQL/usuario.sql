@@ -1,0 +1,1 @@
+select * from Usuario where email = "adm@gmail.com" and senha = "123456";

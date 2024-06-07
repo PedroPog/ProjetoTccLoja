@@ -12,6 +12,11 @@ CREATE TABLE usuario
  UNIQUE (email)
 ); 
 
+INSERT INTO usuario (nome, email, senha, tipo, std)
+        VALUES ("adm","adm@gmail.com","123456",1,1);
+INSERT INTO usuario (nome, email, senha, tipo, std)
+        VALUES ("cliente","cliente@gmail.com","123456",0,1);
+
 CREATE TABLE formapagamento 
 ( 
  idformapagamento INT PRIMARY KEY AUTO_INCREMENT,  

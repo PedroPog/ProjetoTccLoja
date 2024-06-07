@@ -30,17 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Adm\Controllers\" />
-    <Folder Include="Areas\Adm\Data\" />
-    <Folder Include="Areas\Adm\Models\" />
-    <Folder Include="Areas\Adm\Views\Home\" />
-    <Folder Include="Areas\Cliente\Controllers\" />
-    <Folder Include="Areas\Cliente\Data\" />
-    <Folder Include="Areas\Cliente\Models\" />
-    <Folder Include="Areas\Cliente\Views\" />
-    <Folder Include="Libraries\Login\" />
     <Folder Include="Libraries\Middleware\" />
-    <Folder Include="Libraries\Sessao\" />
     <Folder Include="Repository\Utils\" />
   </ItemGroup>
 

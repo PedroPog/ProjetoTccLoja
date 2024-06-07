@@ -5,7 +5,9 @@
     --highlight-color: #57d1bd;
     --highlight-hover-color: #C3FCF2;
 }
-
+.containerfake {
+    margin-bottom: 20rem !important;
+}
 html {
     font-size: 14px;
     font-family: "Montserrat", sans-serif;
@@ -101,6 +103,7 @@ footer {
 
 .dropdown-menu {
     background-color: var(--primary-color);
+    left: -50px !important;
 }
 .dropdown-item {
     color: var(--secondary-color) !important;
