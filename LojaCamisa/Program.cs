@@ -53,11 +53,15 @@ app.UseSession();
 app.UseRouting();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoint =>
+{
+    endpoint.MapControllerRoute(
+        name:"areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+    endpoint.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
 
 app.Run();

@@ -1,0 +1,130 @@
+﻿@model LojaCamisa.Models.Produtos
+
+@{
+    ViewData["Title"] = "ProdutoList";
+}
+
+<h1>ProdutoList</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CadastrarProduto" asp-controller="Home" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nomeProduto" class="control-label"></label>
+                <input asp-for="nomeProduto" class="form-control" />
+                <span asp-validation-for="nomeProduto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="file" name="files" id="fileInput" multiple /><br />
+                <!--<span asp-validation-for="imagem" class="text-danger"></span>-->
+            </div>
+            <div id="imagePreview"></div>
+            <div class="form-group">
+                <label asp-for="lancamento" class="control-label"></label>
+                <input asp-for="lancamento" class="form-control" />
+                <span asp-validation-for="lancamento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="descricao" class="control-label"></label>
+                <input asp-for="descricao" class="form-control" />
+                <span asp-validation-for="descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="preco" class="control-label"></label>
+                <input asp-for="preco" class="form-control" />
+                <span asp-validation-for="preco" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="status" class="control-label"></label>
+                <input asp-for="status" class="form-control" />
+                <span asp-validation-for="status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="marca" class="control-label"></label>
+                <input asp-for="marca" class="form-control" />
+                <span asp-validation-for="marca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="nacional" class="control-label"></label>
+                <input asp-for="nacional" class="form-control" />
+                <span asp-validation-for="nacional" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="modalidade" class="control-label"></label>
+                <input asp-for="modalidade" class="form-control" />
+                <span asp-validation-for="modalidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="quantidade" class="control-label"></label>
+                <input asp-for="quantidade" class="control-label" />
+                <span asp-validation-for="quantidade" class="text-danger"></span>
+            </div>
+            
+            @ViewBag.msg
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-area="Adm" asp-controller="Home" asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    let selectedFiles = [];
+
+    document.getElementById('fileInput').addEventListener('change', function () {
+        const imagePreview = document.getElementById('imagePreview');
+        const newFiles = Array.from(this.files);
+
+        newFiles.forEach((file, index) => {
+            selectedFiles.push(file);
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const div = document.createElement('div');
+                div.style.position = 'relative';
+                div.style.display = 'inline-block';
+                div.style.margin = '5px';
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.width = '100px';
+                img.style.height = '100px';
+                img.style.objectFit = 'cover';
+
+                const removeButton = document.createElement('button');
+                removeButton.innerText = 'X';
+                removeButton.style.position = 'absolute';
+                removeButton.style.top = '0';
+                removeButton.style.right = '0';
+                removeButton.style.background = 'red';
+                removeButton.style.color = 'white';
+                removeButton.style.border = 'none';
+                removeButton.style.borderRadius = '50%';
+                removeButton.style.cursor = 'pointer';
+                removeButton.addEventListener('click', () => {
+                    div.remove();
+                    selectedFiles = selectedFiles.filter((_, i) => i !== index);
+                    updateFileInput();
+                });
+
+                div.appendChild(img);
+                div.appendChild(removeButton);
+                imagePreview.appendChild(div);
+            }
+            reader.readAsDataURL(file);
+        });
+    });
+
+    function updateFileInput() {
+        const dataTransfer = new DataTransfer();
+        selectedFiles.forEach(file => dataTransfer.items.add(file));
+        document.getElementById('fileInput').files = dataTransfer.files;
+    }
+</script>

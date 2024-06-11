@@ -1,7 +1,9 @@
-﻿
+﻿@inject LojaCamisa.Libraries.Login.LoginUsuario _usuario
+
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Areá Gerente";
 }
 
-<h1>Index</h1>
+<h1>Bem Vindo! <br />@_usuario.GetCliente().nome.ToUpper()</h1>
 

@@ -41,8 +41,7 @@
 </head>
 <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Painel</a>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0 text-white">Painel Geral</a>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
                 <a class="nav-link" asp-area="" asp-action="Logout" asp-controller="Home"><span>@_usuario.GetCliente().nome </span> Sair</a>
@@ -56,74 +55,43 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Home" asp-action="Index">
+                            <a class="nav-link active" asp-controller="Home" asp-action="Index" asp-area="Adm">
                                 <span data-feather="home"></span>
                                 Painel de Controle
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="Index" asp-controller="Categoria">
-                                <span data-feather="file"></span>
-                                Categoria
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="shopping-cart"></span>
+                            <a class="nav-link" asp-action="ProdutoList" asp-controller="Home" asp-area="Adm">
+                                <span data-feather="archive"></span>
                                 Produtos
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Cliente" asp-action="Index">
+                            <a class="nav-link" asp-action="Usuarios" asp-controller="Home" asp-area="Adm">
                                 <span data-feather="users"></span>
-                                Cliente
+                                Usuarios
                             </a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="Home" asp-action="Pedidos" asp-area="Adm">
                                 <span data-feather="file"></span>
                                 Pedidos
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="bar-chart-2"></span>
-                                Relatórios
-                            </a>
-                        </li>
                     </ul>
 
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Saved reports</span>
-                        <a class="d-flex align-items-center text-muted" href="#">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="Home" asp-action="Person" asp-area="Adm">
                                 <span data-feather="file-text"></span>
-                                Current month
+                                Meu Usuario
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link disabled" href="#">
                                 <span data-feather="file-text"></span>
-                                Last quarter
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Social engagement
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Year-end sale
+                                Relatorios
                             </a>
                         </li>
                     </ul>

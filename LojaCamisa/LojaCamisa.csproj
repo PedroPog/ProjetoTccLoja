@@ -30,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Gestor\Controllers\" />
+    <Folder Include="Areas\Gestor\Data\" />
+    <Folder Include="Areas\Gestor\Models\" />
+    <Folder Include="Areas\Gestor\Views\" />
     <Folder Include="Libraries\Middleware\" />
     <Folder Include="Repository\Utils\" />
   </ItemGroup>
