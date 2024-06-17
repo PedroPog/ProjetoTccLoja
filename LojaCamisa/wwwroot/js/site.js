@@ -1,19 +1,19 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    const brandImages = document.querySelectorAll('.img-slide');
+    const marcasSlide = document.querySelector('.marcas-slide');
+    const images = marcasSlide.innerHTML;
+    marcasSlide.innerHTML += images; // Duplicate the images for infinite scrolling effect
 
-    brandImages.forEach(function (img) {
-        img.addEventListener('click', function () {
-            const brand = this.getAttribute('data-brand');
-            // Enviar a marca selecionada para o backend via AJAX
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/Home/FiltrarPorMarca', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    // Lógica para lidar com a resposta do servidor, se necessário
-                }
-            };
-            xhr.send(JSON.stringify({ marcaSelecionada: brand }));
-        });
-    });
+    const slideWidth = marcasSlide.scrollWidth / 2; // Get the width of the original images set
+    let start = 0;
+
+    function animate() {
+        start -= 1; // Adjust the speed by changing this value
+        if (Math.abs(start) >= slideWidth) {
+            start = 0;
+        }
+        marcasSlide.style.transform = `translateX(${start}px)`;
+        requestAnimationFrame(animate);
+    }
+
+    animate();
 });

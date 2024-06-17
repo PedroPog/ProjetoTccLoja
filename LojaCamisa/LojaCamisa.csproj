@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Gestor\**" />
+    <Content Remove="Areas\Gestor\**" />
+    <EmbeddedResource Remove="Areas\Gestor\**" />
+    <None Remove="Areas\Gestor\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BootstrapIcons.AspNetCore" Version="1.11.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
@@ -30,10 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Gestor\Controllers\" />
-    <Folder Include="Areas\Gestor\Data\" />
-    <Folder Include="Areas\Gestor\Models\" />
-    <Folder Include="Areas\Gestor\Views\" />
     <Folder Include="Libraries\Middleware\" />
     <Folder Include="Repository\Utils\" />
   </ItemGroup>

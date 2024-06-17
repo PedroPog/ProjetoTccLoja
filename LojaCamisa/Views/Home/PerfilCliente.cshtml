@@ -1,0 +1,66 @@
+﻿
+@model Usuario
+@{
+    ViewData["Title"] = "PerfilCliente";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="sidebar">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-target="perfil">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-target="pedidos">Visualizar Pedidos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-target="endereco">Verificar Endereço</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-target="pagamentos">Formas de Pagamentos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div id="content">
+                @await Html.PartialAsync("_Perfil", Model)
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .sidebar {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-right: 1px solid #dee2e6;
+    }
+
+        .sidebar .nav-link {
+            color: #333;
+            padding: 10px 15px;
+            display: block;
+        }
+
+            .sidebar .nav-link.active {
+                font-weight: bold;
+                background-color: #e9ecef;
+            }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.nav-link').click(function (e) {
+            e.preventDefault();
+            var target = $(this).data('target');
+
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
+
+            $('#content').load('/Home/' + target);
+        });
+    });
+</script>

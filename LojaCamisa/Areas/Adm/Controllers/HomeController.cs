@@ -53,7 +53,7 @@ namespace LojaCamisa.Areas.Adm.Controllers
         }
 
         [HttpPost]
-        public IActionResult CadastrarProduto(Produtos produtos, List<IFormFile> files)
+        public IActionResult CadastrarProduto(ProdutoTemp produtos, List<IFormFile> files)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace LojaCamisa.Areas.Adm.Controllers
                     }
                 }
 
-                _produtoRepository.CadastrarProduto(produtos);
+                _produtoRepository.CadastrarProduto(produtos, files);
                 TempData["MSG_S"] = "Produto cadastrado com sucesso!";
                 return RedirectToAction(nameof(ProdutoList));
             }

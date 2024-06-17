@@ -1,5 +1,6 @@
 ﻿using LojaCamisa.Models;
 using LojaCamisa.Repository.Interface.Contract;
+using Microsoft.AspNetCore.Http;
 using MySql.Data.MySqlClient;
 using System.Data;
 
@@ -132,9 +133,52 @@ namespace LojaCamisa.Repository.Interface
             throw new NotImplementedException();
         }
 
-        public void CadastrarProduto(Produtos produtos)
+        public void CadastrarProduto(ProdutoTemp produtos,List<IFormFile> file)
         {
-            throw new NotImplementedException();
+            //int id = produtos.idProduto;
+            using (var conexao = new MySqlConnection(_conexao))
+            {
+                conexao.Open();
+
+                string insertProdutoQuery = "INSERT INTO produto (idproduto,nome, descricao, lancamento, quantidade, preco, sts, idmarca, nacional, idmodalidade) " +
+                                            "VALUES (default,@nome, @descricao, @lancamento, @quantidade, @preco, @sts, @idmarca, @nacional, @idmodalidade);";
+
+                using (MySqlCommand cmd = new MySqlCommand(insertProdutoQuery, conexao))
+                {
+                    cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = produtos.nomeProduto;
+                    cmd.Parameters.Add("@descricao", MySqlDbType.VarChar).Value = produtos.descricao;
+                    cmd.Parameters.Add("@lancamento", MySqlDbType.VarChar).Value = produtos.lancamento;
+                    cmd.Parameters.Add("@quantidade", MySqlDbType.VarChar).Value = produtos.quantidade;
+                    cmd.Parameters.Add("@preco", MySqlDbType.VarChar).Value = produtos.preco;
+                    cmd.Parameters.Add("@sts", MySqlDbType.VarChar).Value = "1";
+                    cmd.Parameters.Add("@idmarca", MySqlDbType.VarChar).Value = produtos.marca;
+                    cmd.Parameters.Add("@nacional", MySqlDbType.VarChar).Value = "1";
+                    cmd.Parameters.Add("@idmodalidade", MySqlDbType.VarChar).Value = produtos.modalidade;
+
+                    cmd.ExecuteNonQuery();
+                    produtos.idProduto = (int)cmd.LastInsertedId;  // Get the inserted product ID
+                }
+
+                conexao.Close();
+
+                for (int i = 0; i < file.Count; i++)
+                {
+                    conexao.Open();
+
+                    string insertImagemQuery = "INSERT INTO imagens (idimagem, idproduto, urlimagem) " +
+                                               "VALUES (default, @idproduto, @urlimagem);";
+
+                    using (MySqlCommand imgCmd = new MySqlCommand(insertImagemQuery, conexao))
+                    {
+                        imgCmd.Parameters.Add("@urlimagem", MySqlDbType.VarChar).Value = Path.GetFileName(file[i].FileName);
+                        imgCmd.Parameters.Add("@idproduto", MySqlDbType.VarChar).Value = produtos.idProduto;
+
+                        imgCmd.ExecuteNonQuery();
+                    }
+
+                    conexao.Close();
+                }
+            }
         }
 
         public void Excluir(int id)

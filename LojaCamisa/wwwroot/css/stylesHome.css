@@ -10,12 +10,11 @@
 }
 .marcas {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
     justify-content: center;
-    overflow-x: auto;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
     padding: 1% 0;
-    scrollbar-width: none; /* Firefox */
 }
 
     .marcas::-webkit-scrollbar {
@@ -24,26 +23,28 @@
 
 .marcas-slide {
     display: flex;
+    width: 100%;
     gap: 5%;
     justify-content: center;
     height: 15vh;
-    overflow: auto;
-    padding-left: 10vw;
-
+    position: relative;
+    animation: slide 20s linear infinite;
 }
 .marcas-slide::-webkit-scrollbar{
     
 }
 
 .img-slide {
+    flex: 0 0 auto;
+    width: 200px; /* Ajuste conforme necessário */
     height: 100%;
     object-fit: contain;
     opacity: 0.5;
-    scale:0.8;
+    transform: scale(0.8);
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
     .img-slide:hover {
-        scale: 1.0;
+        transform: scale(1.0);
         opacity: 1.0;
         cursor: pointer;
     }
@@ -87,4 +88,21 @@
     .card {
         width: calc(50% - 10px); /* 2 items per row on smaller screens */
     }
+}
+
+/* Keyframes para a animação contínua */
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Esconder scrollbars */
+.marcas::-webkit-scrollbar,
+.marcas-slide::-webkit-scrollbar {
+    display: none;
 }

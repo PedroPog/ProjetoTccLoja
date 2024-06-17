@@ -30,15 +30,24 @@ namespace LojaCamisa.Controllers
         {
             return View(_produtoRepository.ObterTodosProdutos());
         }
+
+        public IActionResult PerfilCliente(int id)
+        {
+            var usuario = _usuarioRepository.obterUsuarioId(id);
+            return View(usuario);
+        }
+
         public IActionResult DetalhesProdutos(int id)
         {
             return View(_produtoRepository.ObterProduto(id));
         }
+
         public IActionResult Carrinho()
         {
             var carrinho = _carrinho.Consultar();
             return View(carrinho);
         }
+
         public IActionResult AdicionarItem(int id)
         {
             Produtos produtos = _produtoRepository.ObterProduto(id);
@@ -76,6 +85,7 @@ namespace LojaCamisa.Controllers
         public IActionResult Cadastrar([FromForm] Usuario usuario)
         {
             usuario.std = SituacaoConstant.Ativo;
+            usuario.tipo = 0;
             _usuarioRepository.Cadastrar(usuario);
             return RedirectToAction(nameof(Login));
         }
@@ -114,5 +124,49 @@ namespace LojaCamisa.Controllers
             return View("index");
         }
 
+
+        // Método para retornar a view parcial do perfil
+        public IActionResult Perfil()
+        {
+            var usuario = _loginUsuario.GetCliente(); // Obtém o usuário logado, ajuste conforme necessário
+            return PartialView("_Perfil", usuario);
+        }
+
+        public IActionResult EditarPerfil(int id)
+        {
+            var usu = _usuarioRepository.obterUsuarioId(id);
+            return PartialView("_EditarPerfil", usu);
+        }
+
+        [HttpPost]
+        public IActionResult AtualizarPerfil(Usuario usuario)
+        {
+            if (ModelState.IsValid)
+            {
+                _usuarioRepository.Atualizar(usuario);
+                return RedirectToAction(nameof(PerfilCliente), new { id = usuario.idUsuario });
+            }
+
+            // Se houver erros de validação, retorne para a view de edição com os dados do usuário
+            return PartialView("_EditarPerfil", usuario);
+        }
+
+        // Método para retornar a view parcial de pedidos
+        public IActionResult Pedidos()
+        {
+            return PartialView("_Pedidos");
+        }
+
+        // Método para retornar a view parcial de endereço
+        public IActionResult Endereco()
+        {
+            return PartialView("_Endereco");
+        }
+
+        // Método para retornar a view parcial de pagamentos
+        public IActionResult Pagamentos()
+        {
+            return PartialView("_Pagamentos");
+        }
     }
 }
