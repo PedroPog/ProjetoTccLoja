@@ -1,6 +1,7 @@
 using LojaCamisa.Cookie;
 using LojaCamisa.GerenciadorArquivos;
 using LojaCamisa.Libraries.Login;
+using LojaCamisa.Models;
 using LojaCamisa.Repository.Interface;
 using LojaCamisa.Repository.Interface.Contract;
 
@@ -13,6 +14,8 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+builder.Services.AddScoped<IFormaPagamentoRepository, FormaPagamentoRepository>();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {

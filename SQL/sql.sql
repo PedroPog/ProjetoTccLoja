@@ -96,7 +96,7 @@ CREATE TABLE itens_pedido
  idusuario INT NOT NULL,
  nomeproduto VARCHAR(30) NOT NULL,
  quantidade INT NOT NULL,  
- preco_unitario DECIMAL(10,2) NOT NULL,
+ preco_unitario double NOT NULL,
  FOREIGN KEY(idusuario) REFERENCES usuario (idusuario)
 ); 
 

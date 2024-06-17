@@ -14,16 +14,19 @@ namespace LojaCamisa.Controllers
     {
         private IProdutoRepository _produtoRepository;
         private IUsuarioRepository _usuarioRepository;
+        private IFormaPagamentoRepository _pagamentoRepository;
         private LoginUsuario _loginUsuario;
         private Carrinho _carrinho;
 
         public HomeController(IProdutoRepository produtoRepository,Carrinho carrinho,
-            LoginUsuario loginUsuario, IUsuarioRepository usuarioRepository)
+            LoginUsuario loginUsuario, IUsuarioRepository usuarioRepository,
+            IFormaPagamentoRepository pagamentoRepository)
         {
             _produtoRepository = produtoRepository;
             _carrinho = carrinho;
             _loginUsuario = loginUsuario;
             _usuarioRepository = usuarioRepository;
+            _pagamentoRepository = pagamentoRepository;
         }
 
         public IActionResult Index()
@@ -106,7 +109,7 @@ namespace LojaCamisa.Controllers
             }
             else
             {
-                ViewData["MSG_E"] = "Usuário não localizado, por favor verifique e-mail e senha digitado";
+                ViewData["MSG_E"] = "Usuï¿½rio nï¿½o localizado, por favor verifique e-mail e senha digitado";
                 return View();
             }
         }
@@ -125,10 +128,10 @@ namespace LojaCamisa.Controllers
         }
 
 
-        // Método para retornar a view parcial do perfil
+        // Mï¿½todo para retornar a view parcial do perfil
         public IActionResult Perfil()
         {
-            var usuario = _loginUsuario.GetCliente(); // Obtém o usuário logado, ajuste conforme necessário
+            var usuario = _loginUsuario.GetCliente(); // Obtï¿½m o usuï¿½rio logado, ajuste conforme necessï¿½rio
             return PartialView("_Perfil", usuario);
         }
 
@@ -147,26 +150,28 @@ namespace LojaCamisa.Controllers
                 return RedirectToAction(nameof(PerfilCliente), new { id = usuario.idUsuario });
             }
 
-            // Se houver erros de validação, retorne para a view de edição com os dados do usuário
+            // Se houver erros de validaï¿½ï¿½o, retorne para a view de ediï¿½ï¿½o com os dados do usuï¿½rio
             return PartialView("_EditarPerfil", usuario);
         }
 
-        // Método para retornar a view parcial de pedidos
+        // Mï¿½todo para retornar a view parcial de pedidos
         public IActionResult Pedidos()
         {
             return PartialView("_Pedidos");
         }
 
-        // Método para retornar a view parcial de endereço
+        // Mï¿½todo para retornar a view parcial de endereï¿½o
         public IActionResult Endereco()
         {
             return PartialView("_Endereco");
         }
 
-        // Método para retornar a view parcial de pagamentos
+        // Mï¿½todo para retornar a view parcial de pagamentos
         public IActionResult Pagamentos()
         {
-            return PartialView("_Pagamentos");
+            int id = _loginUsuario.GetCliente().idUsuario;
+            var forma = _pagamentoRepository.ObterTodosPag(id);
+            return PartialView("_Pagamentos",forma);
         }
     }
 }
