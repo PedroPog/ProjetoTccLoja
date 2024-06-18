@@ -173,5 +173,52 @@ namespace LojaCamisa.Controllers
             var forma = _pagamentoRepository.ObterTodosPag(id);
             return PartialView("_Pagamentos",forma);
         }
+
+        public IActionResult CadastrarPagamento()
+        {
+            return PartialView("_CadastrarPagamento");
+        }
+        
+        [HttpPost]
+        public IActionResult CadastrarPagamento(FormaPagamento formaPagamento)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _pagamentoRepository.Cadastrar(formaPagamento);
+                    return RedirectToAction(nameof(PerfilCliente), new { id = formaPagamento.IdUsuario });
+                }
+                catch (Exception ex)
+                {
+                    // Logar o erro ou fornecer uma mensagem de erro genérica
+                    ModelState.AddModelError("", "Ocorreu um erro ao cadastrar o pagamento.");
+                    return PartialView("_CadastrarPagamento", formaPagamento);
+                }
+            }
+
+            // Se houver erros de validação, retorne para a view de cadastro com os dados fornecidos
+            return PartialView("_CadastrarPagamento", formaPagamento);
+        }
+        public IActionResult EditarPagamentos(int id = 0)
+        {
+            FormaPagamento forma = _pagamentoRepository.ObterFormaPag(id);
+            return PartialView("_EditarPagamentos", forma);
+            
+        }
+
+        [HttpPost]
+        public IActionResult AtualizarPagamentos(FormaPagamento formaPagamento)
+        {
+            if (ModelState.IsValid)
+            {
+                _pagamentoRepository.Atualziar(formaPagamento);
+                return RedirectToAction(nameof(PerfilCliente), new { id = formaPagamento.IdUsuario });
+            }
+
+            // Se houver erros de valida��o, retorne para a view de edi��o com os dados do usu�rio
+            var usuario = _loginUsuario.GetCliente();
+            return PartialView("_EditarPerfil", usuario);
+        }
     }
 }

@@ -6,7 +6,9 @@
 <div class="container">
     <h1>Formas de Pagamento</h1>
     <div class="text-center mt-4">
-        <a class="btn btn-success"><i class="fas fa-plus"></i> Cadastrar Novo Cartão</a>
+        <a class="btn btn-success" id="cadaProfileButton">
+            <i class="fas fa-plus"></i> Cadastrar Novo Cartão
+        </a>
     </div>
     <br />
     <br />
@@ -22,7 +24,8 @@
                             Vencimento: @pagamento.Vencimento <br />
                             CVV: @pagamento.CVV
                         </p>
-                        <a class="btn btn-primary"><i class="fas fa-pencil-alt"></i> Editar</a>
+                        <a class="btn btn-primary" asp-action="EditarPagamentos" 
+                           asp-controller="Home" asp-area="" asp-route-id="@pagamento.IdFormaPagamento"><i class="fas fa-pencil-alt"></i> Editar</a>
                         <a class="btn btn-danger"><i class="fas fa-trash-alt"></i> Deletar</a>
                     </div>
                 </div>
@@ -31,3 +34,10 @@
     </div>
     
 </div>
+<script>
+    $(document).ready(function () {
+        $('#cadaProfileButton').click(function () {
+            $('#content').load('/Home/CadastrarPagamento/');
+        });
+    });
+</script>

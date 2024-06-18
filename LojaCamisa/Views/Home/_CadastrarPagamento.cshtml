@@ -1,0 +1,51 @@
+@inject LojaCamisa.Libraries.Login.LoginUsuario _usuario
+@model LojaCamisa.Models.FormaPagamento
+@{
+Layout = null;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div id="validationSummary" class="alert alert-danger" style="display: none;"></div>
+        </div>
+    </div>
+    <h1>Cadastrar Novo Cartão</h1>
+    <form asp-action="CadastrarPagamento" asp-controller="Home" method="post" id="paymentForm">
+        <input type="hidden" asp-for="IdUsuario" value="@_usuario.GetCliente().idUsuario"/>
+        <div class="form-group">
+            <label asp-for="NomeCompleto"></label>
+            <input asp-for="NomeCompleto" class="form-control" />
+            <span asp-validation-for="NomeCompleto" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Numero"></label>
+            <input asp-for="Numero" class="form-control" />
+            <span asp-validation-for="Numero" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Vencimento"></label>
+            <input asp-for="Vencimento" class="form-control" placeholder="MM/YY" />
+            <span asp-validation-for="Vencimento" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CVV"></label>
+            <input asp-for="CVV" class="form-control" />
+            <span asp-validation-for="CVV" class="text-danger"></span>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-success" id="submitBtn">Salvar</button>
+        <button type="button" class="btn btn-secondary" onclick="history.back();">Cancelar</button>
+    </form>
+</div>
+
+<script>
+    // Habilitar botão de submit ao preencher corretamente todos os campos
+    $('#paymentForm').change(function () {
+        if ($(this).valid()) {
+            $('#submitBtn').prop('disabled', false);
+        } else {
+            $('#submitBtn').prop('disabled', true);
+        }
+    });
+</script>

@@ -34,7 +34,7 @@ namespace LojaCamisa.Repository.Interface
                     {
                         IdFormaPagamento = (int)dr["idformapagamento"],
                         NomeCompleto = (string)dr["nomecompleto"],
-                        Numero = (double)dr["numero"],
+                        Numero = (string)dr["numero"],
                         Vencimento = (string)dr["vencimento"],
                         CVV = (string)dr["cvv"],
                         IdUsuario = (int)dr["idusuario"]
@@ -112,7 +112,7 @@ namespace LojaCamisa.Repository.Interface
                         {
                             IdFormaPagamento = (int)reader["idformapagamento"],
                             NomeCompleto = (string)reader["nomecompleto"],
-                            Numero = (double)reader["numero"],
+                            Numero = (string)reader["numero"],
                             Vencimento = (string)reader["vencimento"],
                             CVV = (string)reader["cvv"],
                             IdUsuario = (int)reader["idusuario"]

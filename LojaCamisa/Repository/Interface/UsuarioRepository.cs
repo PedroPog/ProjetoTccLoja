@@ -23,7 +23,7 @@ namespace LojaCamisa.Repository.Interface
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select * from Usuario where email = @Email and senha = @senha;", conexao);
+                MySqlCommand cmd = new MySqlCommand("select * from usuario where email = @Email and senha = @senha;", conexao);
                 cmd.Parameters.Add("@Email",MySqlDbType.VarChar).Value = email;
                 cmd.Parameters.Add("@Senha",MySqlDbType.VarChar).Value = senha;
 
@@ -52,7 +52,7 @@ namespace LojaCamisa.Repository.Interface
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select * from Usuario", conexao);
+                MySqlCommand cmd = new MySqlCommand("select * from usuario", conexao);
 
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
 
@@ -128,7 +128,7 @@ namespace LojaCamisa.Repository.Interface
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select * from Usuario where idusuario = @id;", conexao);
+                MySqlCommand cmd = new MySqlCommand("select * from usuario where idusuario = @id;", conexao);
                 cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
 
                 using (var reader = cmd.ExecuteReader())

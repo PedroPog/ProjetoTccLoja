@@ -1,0 +1,32 @@
+@model FormaPagamento
+@{
+Layout = null;
+}
+
+<div class="container">
+    <h1>@(Model == null ? "Cadastrar Novo Cartão" : "Editar Cartão")</h1>
+    <form method="post" action="@Url.Action("AtualizarPagamentos", "Home")">
+        @if (Model.IdFormaPagamento != 0)
+        {
+        <input type="hidden" name="Id" value="@Model.IdFormaPagamento" />
+        }
+        <div class="form-group">
+            <label for="NomeCompleto">Nome Completo</label>
+            <input type="text" class="form-control" id="NomeCompleto" name="NomeCompleto" value="@Model.NomeCompleto" required />
+        </div>
+        <div class="form-group">
+            <label for="Numero">Número do Cartão</label>
+            <input type="text" class="form-control" id="Numero" name="Numero" value="@Model.Numero" required />
+        </div>
+        <div class="form-group">
+            <label for="Vencimento">Data de Vencimento</label>
+            <input type="month" class="form-control" id="Vencimento" name="Vencimento" required />
+        </div>
+        <div class="form-group">
+            <label for="CVV">CVV</label>
+            <input type="text" class="form-control" id="CVV" name="CVV" value="@Model.CVV" required />
+        </div>
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="@Url.Action("PerfilCliente", "Home")" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
