@@ -5,11 +5,16 @@
 
 <div class="container">
     <h1>Formas de Pagamento</h1>
+    <div class="text-center mt-4">
+        <a class="btn btn-success"><i class="fas fa-plus"></i> Cadastrar Novo Cartão</a>
+    </div>
+    <br />
+    <br />
     <div class="row">
         @foreach (var pagamento in Model)
         {
-            <div class="col-md-4 mb-3">
-                <div class="card">
+            <div class="col-md-6 col-sm-12 mb-3">
+                <div class="card w-100">
                     <div class="card-body">
                         <h5 class="card-title">@pagamento.NomeCompleto</h5>
                         <p class="card-text">
@@ -24,7 +29,5 @@
             </div>
         }
     </div>
-    <div class="text-center mt-4">
-        <a class="btn btn-success"><i class="fas fa-plus"></i> Cadastrar Novo Cartão</a>
-    </div>
+    
 </div>

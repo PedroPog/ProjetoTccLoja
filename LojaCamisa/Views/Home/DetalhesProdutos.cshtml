@@ -8,21 +8,21 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6">
-            <div id="productCarousel" class="carousel slide" data-ride="carousel">
+            <div id="productCarousel" class="carousel slide shadow-sm" data-ride="carousel">
                 <div class="carousel-inner">
                     @if (Model.imagem != null && Model.imagem.Count > 0)
                     {
                         for (int i = 0; i < Model.imagem.Count; i++)
                         {
                             <div class="carousel-item @(i == 0 ? "active" : "")">
-                                <img class="d-block w-100" src="/imagens/@Model.imagem[i]" alt="Imagem @i de @Model.nomeProduto" style="max-height: 500px; object-fit: contain;">
+                                <img class="d-block w-100 rounded" src="/imagens/@Model.imagem[i]" alt="Imagem @i de @Model.nomeProduto" style="max-height: 500px; object-fit: contain;">
                             </div>
                         }
                     }
                     else
                     {
                         <div class="carousel-item active">
-                            <img class="d-block w-100" src="https://place-hold.it/400x500" alt="Imagem não disponível" style="max-height: 500px; object-fit: cover;">
+                            <img class="d-block w-100 rounded" src="https://place-hold.it/400x500" alt="Imagem não disponível" style="max-height: 500px; object-fit: cover;">
                         </div>
                     }
                 </div>
@@ -40,59 +40,40 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h1 class="product-title-detalhes">@Model.nomeProduto</h1>
+            <h1 class="product-title-detalhes text-primary">@Model.nomeProduto</h1>
             <p class="product-description">@Model.descricao</p>
             <hr />
             <dl class="row">
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.lancamento)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.lancamento)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.quantidade)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.quantidade)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.preco)
-                </dt>
-                <dd class="col-sm-8">
-                    <strong>R$ @Model.preco.ToString("F2")</strong>
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.marca)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.marca)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.nacional)
-                </dt>
+                <dt class="col-sm-4 font-weight-bold">@Html.DisplayNameFor(model => model.lancamento)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.lancamento)</dd>
+                <dt class="col-sm-4 font-weight-bold">@Html.DisplayNameFor(model => model.quantidade)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.quantidade)</dd>
+                <dt class="col-sm-4 font-weight-bold">@Html.DisplayNameFor(model => model.preco)</dt>
+                <dd class="col-sm-8"><strong>R$ @Model.preco.ToString("F2")</strong></dd>
+                <dt class="col-sm-4 font-weight-bold">@Html.DisplayNameFor(model => model.marca)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.marca)</dd>
+                <dt class="col-sm-4 font-weight-bold">@Html.DisplayNameFor(model => model.nacional)</dt>
                 <dd class="col-sm-8">
                     @if (Model.nacional)
                     {
                         <strong>Nacional</strong>
-                    }else{
-                        <strong>Estrageiro</strong>
+                    }
+                    else
+                    {
+                        <strong>Estrangeiro</strong>
                     }
                 </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.modalidade)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.modalidade)
-                </dd>
+                <dt class="col-sm-4 font-weight-bold">@Html.DisplayNameFor(model => model.modalidade)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.modalidade)</dd>
             </dl>
             <div class="product-actions-detalhes mt-4">
-                @if(Model.status){
+                @if (Model.status)
+                {
                     @if (Model.quantidade > 0)
                     {
                         @if (_usuario.GetCliente() != null)
                         {
-                            <a asp-controller="Home" asp-action="AdicionarItem" asp-route-id="@Model.idProduto" class="btn btn-primary btn-lg">Adicionar ao Carrinho</a>
+                            <a asp-controller="Home" asp-action="AdicionarItem" asp-route-id="@Model.idProduto" class="btn btn-primary btn-lg" id="addToCartBtn">Adicionar ao Carrinho</a>
                         }
                         else
                         {
@@ -106,12 +87,64 @@
                 }
                 else
                 {
-                    <button class="btn btn-warn btn-lg" disabled>Fora de Estoque</button>
+                    <button class="btn btn-warning btn-lg" disabled>Fora de Estoque</button>
                 }
             </div>
         </div>
     </div>
 </div>
+
+
+<style>
+    :root {
+        --primary-color: #005248;
+        --secondary-color: #4B8178;
+        --tertiary-color: #C3FCF2;
+        --highlight-color: #57d1bd;
+        --highlight-hover-color: #C3FCF2;
+    }
+    .product-title-detalhes {
+        font-size: 2.5rem;
+        font-weight: bold color: var(--primary-color);
+    }
+
+    .product-description {
+        font-size: 1.2rem;
+        color: #005248;
+    }
+
+    .carousel-inner img {
+        transition: transform 0.5s ease;
+    }
+
+        .carousel-inner img:hover {
+            transform: scale(1.05);
+        }
+
+    .product-actions-detalhes .btn {
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        background-color: var(--primary-color);
+        border-color:transparent;
+    }
+
+        .product-actions-detalhes .btn:hover {
+            transform: translateY(-2px);
+            background-color: var(--primary-color);
+            border-color: transparent;
+        }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+    }
+
+        .carousel-control-prev-icon:hover,
+        .carousel-control-next-icon:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+</style>
+
 
 @section Scripts {
     <script>
@@ -122,8 +155,22 @@
         function showLoginAlert(event) {
             event.preventDefault();
             alert('Por favor, faça login para adicionar itens ao carrinho.');
-            // Redirecionar para a página de login após o alerta, se necessário
             window.location.href = '@Url.Action("Login", "Home")';
         }
+
+        $('#addToCartBtn').click(function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function () {
+                    alert('Item adicionado ao carrinho!');
+                },
+                error: function () {
+                    alert('Houve um erro ao adicionar o item ao carrinho.');
+                }
+            });
+        });
     </script>
 }

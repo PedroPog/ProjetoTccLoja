@@ -25,15 +25,14 @@
                         </div>
                         <a asp-controller="Home" asp-action="RemoverProduto" asp-route-id="@produto.idProduto"
                            class="btn btn-danger position-absolute top-0 end-0 m-2" onclick="removerProduto('@produto.idProduto')">X</a>
-
                     </div>
                 </div>
                 <div class="card-footer d-flex">
                     <div class="d-flex align-items-center w-85">
                         <span>Quantidade: </span>
-                        <button class="btn btn-outline-secondary rounded-circle mx-3" aria-label="Diminuir a quantidade" style="width:3vw;" onclick="atualizarQuantidade(this, @produto.idProduto, -1)">-</button>
-                        <input type="number" class="form-control text-center mx-2" value="@produto.quantidade" min="1" style="width: 60px;" aria-label="Quantidade do produto" onchange="atualizarQuantidadeDiretamente(this, @produto.idProduto)" />
-                        <button class="btn btn-outline-secondary rounded-circle mx-3" aria-label="Aumentar a quantidade" style="width:3vw;" onclick="atualizarQuantidade(this, @produto.idProduto, 1)">+</button>
+                        <button class="btn btn-outline-secondary btn-circle mx-3" aria-label="Diminuir a quantidade" onclick="atualizarQuantidade(this, @produto.idProduto, -1)">-</button>
+                        <input type="number" class="form-control text-center mx-2" value="@produto.quantidade" min="1" aria-label="Quantidade do produto" onchange="atualizarQuantidadeDiretamente(this, @produto.idProduto)" />
+                        <button class="btn btn-outline-secondary btn-circle mx-3" aria-label="Aumentar a quantidade" onclick="atualizarQuantidade(this, @produto.idProduto, 1)">+</button>
                     </div>
                     <div class="d-flex w-25 align-items-center justify-content-end">
                         <span class="card-text fw-bold" id="subtotal-@produto.idProduto" data-preco="@produto.preco">R$ @(produto.quantidade * produto.preco)</span>
@@ -106,6 +105,88 @@
         var card = document.querySelector(`#subtotal-${idProduto}`).closest('.card');
         card.remove();
         atualizarTotalSubtotal();
-        
     }
 </script>
+
+<style>
+    :root {
+        --primary-color: #005248;
+        --secondary-color: #4B8178;
+        --tertiary-color: #C3FCF2;
+    }
+
+    body {
+        background-color: var(--tertiary-color);
+        color: var(--primary-color);
+    }
+
+    h3 {
+        color: var(--primary-color);
+    }
+
+    .scrollable-column {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    .fixed-column {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .card {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+        .btn-primary:hover {
+            opacity: 0.8;
+        }
+
+    .btn-outline-secondary {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            opacity: 0.8;
+        }
+
+    .text-danger {
+        color: red;
+    }
+
+    .btn-circle {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-control {
+        max-width: 100px;
+        text-align: center;
+    }
+</style>

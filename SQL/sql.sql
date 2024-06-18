@@ -28,6 +28,8 @@ CREATE TABLE formapagamento
  FOREIGN KEY(idusuario) REFERENCES usuario (idusuario)
 ); 
 
+
+
 CREATE TABLE endereco 
 ( 
  idendereco INT PRIMARY KEY AUTO_INCREMENT,  
