@@ -98,14 +98,14 @@ CREATE TABLE itens_pedido
  idusuario INT NOT NULL,
  nomeproduto VARCHAR(30) NOT NULL,
  quantidade INT NOT NULL,  
- preco_unitario double NOT NULL,
+ preco_unitario DOUBLE NOT NULL,
  FOREIGN KEY(idusuario) REFERENCES usuario (idusuario)
 ); 
 
 CREATE TABLE pedido 
 ( 
  idpedido INT PRIMARY KEY AUTO_INCREMENT,  
- valor_total DECIMAL(10,2) NOT NULL,  
+ valor_total DOUBLE NOT NULL,  
  idusuario INT NOT NULL,  
  sts INT NOT NULL,
  FOREIGN KEY(idusuario) REFERENCES usuario (idusuario)
