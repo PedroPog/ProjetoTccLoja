@@ -1,5 +1,6 @@
 using System.Data;
 using LojaCamisa.Models;
+using LojaCamisa.Models.Constant;
 using LojaCamisa.Repository.Interface.Contract;
 using MySql.Data.MySqlClient;
 
@@ -34,7 +35,7 @@ public class PedidoRepository : IPedidoRepository
                     IdPedido = (int)dr["idpedido"],
                     IdUsuario = (int)dr["idusuario"],
                     ValorTotal = (double)dr["valor_total"],
-                    Status = (int)dr["sts"],
+                    Status = (EstadoPedido)dr["sts"],
                 };
                     
                 listPedido.Add(pedido);
@@ -66,7 +67,7 @@ public class PedidoRepository : IPedidoRepository
                     IdPedido = (int)dr["idpedido"],
                     IdUsuario = (int)dr["idusuario"],
                     ValorTotal = (double)dr["valor_total"],
-                    Status = (int)dr["sts"],
+                    Status = (EstadoPedido)dr["sts"],
                 };
                     
                 listPedido.Add(pedido);
@@ -96,7 +97,7 @@ public class PedidoRepository : IPedidoRepository
                         IdPedido = (int)reader["idpedido"],
                         IdUsuario = (int)reader["idusuario"], 
                         ValorTotal = (double)reader["valor_total"],
-                        Status = (int)reader["sts"]
+                        Status = (EstadoPedido)reader["sts"]
                     };
                 }
                 else

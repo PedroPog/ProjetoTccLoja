@@ -16,6 +16,8 @@ builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
 builder.Services.AddScoped<IFormaPagamentoRepository, FormaPagamentoRepository>();
+builder.Services.AddScoped<IItensPedidoRepository, ItensPedidoRepository>();
+builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {

@@ -15,13 +15,18 @@ namespace LojaCamisa.Controllers
         private IProdutoRepository _produtoRepository;
         private IUsuarioRepository _usuarioRepository;
         private IFormaPagamentoRepository _pagamentoRepository;
+        private IItensPedidoRepository _itemPedidoRepository;
+        private IPedidoRepository _pedidoRepository;
         private LoginUsuario _loginUsuario;
         private Carrinho _carrinho;
 
         public HomeController(IProdutoRepository produtoRepository,Carrinho carrinho,
             LoginUsuario loginUsuario, IUsuarioRepository usuarioRepository,
-            IFormaPagamentoRepository pagamentoRepository)
+            IFormaPagamentoRepository pagamentoRepository,IItensPedidoRepository itemPedidoRepository,
+            IPedidoRepository pedidoRepository)
         {
+            _pedidoRepository = pedidoRepository;
+            _itemPedidoRepository = itemPedidoRepository;
             _produtoRepository = produtoRepository;
             _carrinho = carrinho;
             _loginUsuario = loginUsuario;
@@ -157,7 +162,19 @@ namespace LojaCamisa.Controllers
         // M�todo para retornar a view parcial de pedidos
         public IActionResult Pedidos()
         {
-            return PartialView("_Pedidos");
+            var list = _pedidoRepository.ObterTodosPedidos(_loginUsuario.GetCliente().idUsuario);
+            return PartialView("_Pedidos",list);
+        }
+
+        public IActionResult DetalhesPedido(int IdPedido)
+        {
+            var list = _itemPedidoRepository.ObterTodosPeditos(IdPedido);
+            return PartialView("_DetalhesPedido", list);
+        }
+        public IActionResult EditarPedido(int id)
+        {
+            var usu = _itemPedidoRepository.ObterItemPedido(id);
+            return PartialView("_EditarPedido", usu);
         }
 
         // M�todo para retornar a view parcial de endere�o

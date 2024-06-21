@@ -1,4 +1,49 @@
-﻿<div>
-    <h1>Visualizar Pedidos</h1>
-    <p>Aqui você verá os pedidos.</p>
+﻿@using LojaCamisa.Models.Constant
+@model IEnumerable<Pedido>
+@{
+    Layout = null;
+}
+
+<div class="container">
+    <h1>Pedidos</h1>
+    <br />
+    <div class="row">
+        @foreach (var pedido in Model)
+        {
+            <div class="col-md-6 col-sm-12 mb-3">
+                <div class="card w-75">
+                    <div class="card-body">
+                        <h5 class="card-title">Pedido numero: @pedido.IdPedido</h5>
+                        <p class="card-text">
+                            status: @pedido.Status <br />
+                            Valor Total: @pedido.ValorTotal
+                        </p>
+                        @if (@pedido.Status == EstadoPedido.FECHADO ||
+                             @pedido.Status == EstadoPedido.CANCELADO)
+                        {
+                            <a class="btn btn-primary disabled"  disabled><i class="fas fa-times"></i> @pedido.Status</a>
+                        }else if (@pedido.Status == EstadoPedido.ENTREGUE)
+                        {
+                            <a class="btn btn-primary disabled" asp-action="" 
+                               asp-controller="Home" asp-area="" asp-route-id="@pedido.IdPedido"><i class="fas fa-pencil-alt"></i> Confirmar Recebimento</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary editProfileButton" data-id="@pedido.IdPedido"><i class="fas fa-pencil-alt"></i> Detalhes</a>
+                            <a class="btn btn-danger"><i class="fas fa-trash-alt"></i> Solicitar Cancelamento</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
 </div>
+<script>
+    $(document).ready(function () {
+        $('.editProfileButton').click(function () {
+            var userId = $(this).data('id');
+            $('#content').load('/Home/DetalhesPedido/' + userId);
+        });
+    });
+</script>

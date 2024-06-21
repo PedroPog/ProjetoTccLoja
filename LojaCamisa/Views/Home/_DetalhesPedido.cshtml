@@ -1,0 +1,31 @@
+﻿@model ListaItensPedido
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Pedido Número: @Model.IdPedido</h1>
+    <h2 class="text-center mb-4">Usuário: @Model.IdUsuario</h2>
+    <h3 class="text-center mb-5">Valor Total: R$ @Model.ValorTotal</h3>
+    <div class="row">
+        @foreach (var pedido in Model.Pedidos)
+        {
+        <div class="col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
+            <div class="card shadow-sm w-100">
+                <div class="card-body">
+                    <h5 class="card-title">Pedido número: @pedido.IdPedido</h5>
+                    <p class="card-text">
+                        Quantidade: @pedido.Quantidade <br />
+                        Nome do Produto: @pedido.NomeProduto <br/>
+                        Valor Total do Item: R$ @pedido.PrecoUni
+                    </p>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#cadaProfileButton').click(function () {
+            $('#content').load('/Home/CadastrarPagamento/');
+        });
+    });
+</script>

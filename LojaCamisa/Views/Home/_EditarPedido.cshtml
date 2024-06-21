@@ -1,0 +1,48 @@
+﻿@model ItensPedido
+<!--
+<div>
+    <h1>Editar Perfil</h1>
+    <form asp-action="AtualizarPerfil" asp-controller="Home" method="post">
+        <input type="hidden" asp-for="" /> <-- Campo hidden para enviar o ID ->
+
+        <div class="form-group">
+            <label asp-for=""></label>
+            <input asp-for="" class="form-control" />
+            <span asp-validation-for="" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for=""></label>
+            <input asp-for="" class="form-control" />
+            <span asp-validation-for="" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for=""></label>
+            <input asp-for="" class="form-control" />
+            <span asp-validation-for="" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-secondary" id="cancelEditButton">Cancelar</button>
+    </form>
+</div>
+-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#cancelEditButton').click(function () {
+            $('#content').load('/Home/Perfil');
+        });
+
+        $('#editProfileForm').submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function (response) {
+                    $('#content').html(response);
+                }
+            });
+        });
+    });
+</script>

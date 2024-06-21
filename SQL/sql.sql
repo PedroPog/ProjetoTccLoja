@@ -96,9 +96,13 @@ CREATE TABLE itens_pedido
 ( 
  iditem INT PRIMARY KEY AUTO_INCREMENT,  
  idusuario INT NOT NULL,
+ idpedido INT NOT NULL,
+ idproduto INT NOT NULL,
  nomeproduto VARCHAR(30) NOT NULL,
  quantidade INT NOT NULL,  
  preco_unitario DOUBLE NOT NULL,
+ FOREIGN KEY(idpedido) REFERENCES pedido (idpedido),
+ FOREIGN KEY(idproduto) REFERENCES produto (idproduto),
  FOREIGN KEY(idusuario) REFERENCES usuario (idusuario)
 ); 
 

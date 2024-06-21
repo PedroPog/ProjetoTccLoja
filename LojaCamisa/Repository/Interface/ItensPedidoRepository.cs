@@ -1,5 +1,6 @@
 using System.Data;
 using LojaCamisa.Models;
+using LojaCamisa.Models.Constant;
 using LojaCamisa.Repository.Interface.Contract;
 using MySql.Data.MySqlClient;
 
@@ -33,6 +34,7 @@ public class ItensPedidoRepository : IItensPedidoRepository
                 {
                     IdItem = (int)dr["iditem"],
                     IdUsuario = (int)dr["idusuario"],
+                    IdPedido = (int)dr["idpedido"],
                     NomeProduto = (string)dr["nomeproduto"],
                     Quantidade = (int)dr["quantidade"],
                     PrecoUni = (double)dr["preco_unitario"],
@@ -45,15 +47,61 @@ public class ItensPedidoRepository : IItensPedidoRepository
         }
     }
 
-    public IEnumerable<ItensPedido> ObterTodosPeditos(int IdUsuario)
+    public ListaItensPedido ObterTodosPeditos(int IdPedido)
+    {
+        List<ItensPedido> listaItens = obterItens(IdPedido);
+        Pedido pedido = ObterPedido(IdPedido);
+
+        ListaItensPedido list = new ListaItensPedido
+        {
+            IdPedido = pedido.IdPedido,
+            IdUsuario = pedido.IdUsuario,
+            ValorTotal = pedido.ValorTotal,
+            Pedidos = listaItens
+        };
+        return list;
+    }
+    
+    public Pedido ObterPedido(int IdPedido)
+    {
+        using (var conexao = new MySqlConnection(_conexao))
+        {
+            conexao.Open();
+
+            MySqlCommand cmd = new MySqlCommand(
+                "SELECT * FROM pedido WHERE idpedido = @idpedido;", conexao);
+
+            cmd.Parameters.AddWithValue("@idpedido", IdPedido);
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    return new Pedido
+                    {
+                        IdPedido = (int)reader["idpedido"],
+                        IdUsuario = (int)reader["idusuario"], 
+                        ValorTotal = (double)reader["valor_total"],
+                        Status = (EstadoPedido)reader["sts"]
+                    };
+                }
+                else
+                {
+                    // Forma de pagamento não encontrada
+                    return null;
+                }
+            }
+        }
+    }
+    public List<ItensPedido> obterItens(int IdPedido)
     {
         List<ItensPedido> listPedidos = new List<ItensPedido>();
         using (var conexao = new MySqlConnection(_conexao))
         {
             conexao.Open();
 
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM itens_pedido where idusuario=@idUsu;", conexao);
-            cmd.Parameters.Add("@idUsu", MySqlDbType.Int32).Value = IdUsuario;
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM itens_pedido where idpedido=@idpedido;", conexao);
+            cmd.Parameters.Add("@idpedido", MySqlDbType.Int32).Value = IdPedido;
             
             MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
             DataTable data = new DataTable();
@@ -65,6 +113,7 @@ public class ItensPedidoRepository : IItensPedidoRepository
                 {
                     IdItem = (int)dr["iditem"],
                     IdUsuario = (int)dr["idusuario"],
+                    IdPedido = (int)dr["idpedido"],
                     NomeProduto = (string)dr["nomeproduto"],
                     Quantidade = (int)dr["quantidade"],
                     PrecoUni = (double)dr["preco_unitario"],
@@ -96,6 +145,7 @@ public class ItensPedidoRepository : IItensPedidoRepository
                     {
                         IdItem = (int)reader["iditem"],
                         IdUsuario = (int)reader["idusuario"],
+                        IdPedido = (int)reader["idpedido"],
                         NomeProduto = (string)reader["nomeproduto"],
                         Quantidade = (int)reader["quantidade"],
                         PrecoUni = (double)reader["preco_unitario"]
@@ -117,10 +167,11 @@ public class ItensPedidoRepository : IItensPedidoRepository
             conexao.Open();
 
             MySqlCommand cmd = new MySqlCommand(
-                "INSERT INTO itens_pedido (iditem,idusuario, nomeproduto, quantidade, preco_unitario) " +
-                "VALUES (default,@idusuario, @nomeproduto, @quantidade, @preco_unitario);", conexao);
+                "INSERT INTO itens_pedido (iditem,idusuario,idpedido, nomeproduto, quantidade, preco_unitario) " +
+                "VALUES (default,@idusuario,@idpedido, @nomeproduto, @quantidade, @preco_unitario);", conexao);
 
             cmd.Parameters.AddWithValue("@idusuario", itensPedido.IdUsuario);
+            cmd.Parameters.AddWithValue("@idpedido", itensPedido.IdPedido);
             cmd.Parameters.AddWithValue("@nomeproduto", itensPedido.NomeProduto);
             cmd.Parameters.AddWithValue("@quantidade", itensPedido.Quantidade);
             cmd.Parameters.AddWithValue("@preco_unitario", itensPedido.PrecoUni);
