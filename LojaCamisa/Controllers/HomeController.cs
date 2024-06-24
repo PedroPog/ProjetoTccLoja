@@ -12,6 +12,7 @@ namespace LojaCamisa.Controllers
 {
     public class HomeController : Controller
     {
+        private IEnderecoRepository _enderecoRepository;
         private IProdutoRepository _produtoRepository;
         private IUsuarioRepository _usuarioRepository;
         private IFormaPagamentoRepository _pagamentoRepository;
@@ -23,8 +24,9 @@ namespace LojaCamisa.Controllers
         public HomeController(IProdutoRepository produtoRepository,Carrinho carrinho,
             LoginUsuario loginUsuario, IUsuarioRepository usuarioRepository,
             IFormaPagamentoRepository pagamentoRepository,IItensPedidoRepository itemPedidoRepository,
-            IPedidoRepository pedidoRepository)
+            IPedidoRepository pedidoRepository, IEnderecoRepository enderecoRepository)
         {
+            _enderecoRepository = enderecoRepository;
             _pedidoRepository = pedidoRepository;
             _itemPedidoRepository = itemPedidoRepository;
             _produtoRepository = produtoRepository;
@@ -55,13 +57,6 @@ namespace LojaCamisa.Controllers
             var carrinho = _carrinho.Consultar();
             return View(carrinho);
         }
-
-        public IActionResult FinalizarPedido()
-        {
-            var carrinho = _carrinho.Consultar();
-            return View(carrinho);
-        }
-
         public IActionResult AdicionarItem(int id)
         {
             Produtos produtos = _produtoRepository.ObterProduto(id);
@@ -172,11 +167,50 @@ namespace LojaCamisa.Controllers
             return PartialView("_Pedidos",list);
         }
 
-        public IActionResult DetalhesPedido(int IdPedido)
+        public IActionResult DetalhesPedido(int id)
         {
-            var list = _itemPedidoRepository.ObterTodosPeditos(IdPedido);
+            var list = _itemPedidoRepository.ObterTodosPeditos(id);
             return PartialView("_DetalhesPedido", list);
         }
+        
+        public IActionResult FinalizarPedido()
+        {
+            //_pedidoRepository.FinalizarPedido();
+            List<ProdutoCarrinho> carrinho = _carrinho.Consultar();
+            
+            Pedido pedido = new Pedido()
+            {
+                IdUsuario = _loginUsuario.GetCliente().idUsuario,
+                ValorTotal = 0.0,
+                Status = EstadoPedido.ANALISE
+            };
+            int idPedido = _pedidoRepository.CadastrarRetorno(pedido);
+            foreach (var produtoCarrinho in carrinho)
+            {
+                ItensPedido pedidos = new ItensPedido()
+                {
+                    IdPedido = idPedido,
+                    IdUsuario = _loginUsuario.GetCliente().idUsuario,
+                    IdProduto = produtoCarrinho.idProduto,
+                    Quantidade = produtoCarrinho.quantidade,
+                    NomeProduto = produtoCarrinho.nomeProduto,
+                    PrecoUni = produtoCarrinho.preco
+                };
+                _itemPedidoRepository.Cadastrar(pedidos);
+            }
+
+            double valorTotal = _itemPedidoRepository.ListarTotal(idPedido);
+            pedido = new Pedido()
+            {
+                IdPedido = idPedido,
+                ValorTotal = valorTotal,
+                Status = EstadoPedido.ACEITO
+            };
+            _pedidoRepository.Atualizar(pedido);
+            _carrinho.RemoverTodos();
+            return RedirectToAction("Index");
+        }
+        
         public IActionResult EditarPedido(int id)
         {
             var usu = _itemPedidoRepository.ObterItemPedido(id);
@@ -186,7 +220,47 @@ namespace LojaCamisa.Controllers
         // M�todo para retornar a view parcial de endere�o
         public IActionResult Endereco()
         {
-            return PartialView("_Endereco");
+            var list = _enderecoRepository.ObterTodosEndereco(_loginUsuario.GetCliente().idUsuario);
+            return PartialView("_Endereco",list);
+        }
+        public IActionResult EditarEndereco(int id)
+        {
+            Endereco forma = _enderecoRepository.ObterEndereco(id);
+            return PartialView("_EditarEndereco", forma);
+        }
+        [HttpPost]
+        public IActionResult AtualizarEndereco(Endereco endereco)
+        {
+            if (ModelState.IsValid)
+            {
+                _enderecoRepository.Atualizar(endereco);
+                return RedirectToAction(nameof(PerfilCliente), new { id = endereco.IdUsuario });
+            }
+
+            // Se houver erros de valida��o, retorne para a view de edi��o com os dados do usu�rio
+            return PartialView("_EditarEndereco", endereco);
+        }
+        public IActionResult CadastrarEndereco()
+        {
+            return PartialView("_CadastrarEndereco");
+        }
+        
+        [HttpPost]
+        public IActionResult CadastrarEndereco(Endereco endereco)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _enderecoRepository.Cadastrar(endereco);
+                    return RedirectToAction(nameof(PerfilCliente), new { id = _loginUsuario.GetCliente().idUsuario });
+                }
+                catch (Exception ex)
+                {
+                    return PartialView("_CadastrarEndereco",endereco);
+                }
+            }
+            return PartialView("_CadastrarEndereco",endereco);
         }
 
         // M�todo para retornar a view parcial de pagamentos
@@ -210,18 +284,14 @@ namespace LojaCamisa.Controllers
                 try
                 {
                     _pagamentoRepository.Cadastrar(formaPagamento);
-                    return RedirectToAction(nameof(PerfilCliente), new { id = formaPagamento.IdUsuario });
+                    return RedirectToAction(nameof(PerfilCliente), new { id = _loginUsuario.GetCliente().idUsuario });
                 }
                 catch (Exception ex)
                 {
-                    // Logar o erro ou fornecer uma mensagem de erro genérica
-                    ModelState.AddModelError("", "Ocorreu um erro ao cadastrar o pagamento.");
-                    return PartialView("_CadastrarPagamento", formaPagamento);
+                    return PartialView("_CadastrarPagamento",formaPagamento);
                 }
             }
-
-            // Se houver erros de validação, retorne para a view de cadastro com os dados fornecidos
-            return PartialView("_CadastrarPagamento", formaPagamento);
+            return PartialView("_CadastrarPagamento",formaPagamento);
         }
         public IActionResult EditarPagamentos(int id)
         {

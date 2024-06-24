@@ -20,7 +20,7 @@ namespace LojaCamisa.Models
         public string Cep { get; set; }
 
         [Required]
-        [RegularExpression(@"^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$", ErrorMessage = "Telefone inválido. Formato correto: (XX) 9XXXX-XXXX")]
+        //[RegularExpression(@"^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$", ErrorMessage = "Telefone inválido. Formato correto: (XX) 9XXXX-XXXX")]
         public string Telefone { get; set; }
 
         [Required]

@@ -1,4 +1,51 @@
-﻿<div>
-    <h1>Verificar Endereço</h1>
-    <p>Aqui você verá os endereços.</p>
+﻿@model IEnumerable<Endereco>
+@{
+Layout = null;
+}
+
+<div class="container">
+    <h1>Endereços</h1>
+    <div class="text-center mt-4">
+        <a class="btn btn-success" id="cadaEndeButton">
+            <i class="fas fa-plus"></i> Cadastrar Endereço
+        </a>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        @foreach (var pagamento in Model)
+        {
+        <div class="col-md-6 col-sm-12 mb-3">
+            <div class="card w-100">
+                <div class="card-body">
+                    <h5 class="card-title">@pagamento.Cep</h5>
+                    <p class="card-text">
+                        Endereço: @pagamento.EnderecoCompleto <br />
+                        Telefone: @pagamento.Telefone <br />
+                        Cep: @pagamento.Cep
+                    </p>
+                    <a class="btn btn-primary editEndeButton" data-id="@pagamento.IdEndereco">
+                        <i class="fas fa-pencil-alt"></i> Editar
+                    </a>
+                    <a class="btn btn-danger"><i class="fas fa-trash-alt"></i> Deletar</a>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#cadaEndeButton').click(function () {
+            $('#content').load('/Home/CadastrarEndereco/');
+        });
+    });
+    $(document).ready(function () {
+        $('.editEndeButton').click(function () {
+            var userId = $(this).data('id');
+            $('#content').load('/Home/EditarEndereco/' + userId);
+        });
+    });
+</script>

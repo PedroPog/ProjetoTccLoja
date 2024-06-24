@@ -21,7 +21,7 @@ CREATE TABLE formapagamento
 ( 
  idformapagamento INT PRIMARY KEY AUTO_INCREMENT,  
  nomecompleto VARCHAR(50) NOT NULL,  
- numero double NOT NULL,  
+ numero VARCHAR(16) NOT NULL,  
  cvv CHAR(3) NOT NULL,  
  vencimento VARCHAR(5),  
  idusuario INT,
@@ -91,6 +91,14 @@ INSERT INTO modalidade (nome_modalidade) VALUES ('Basketball');
 INSERT INTO modalidade (nome_modalidade) VALUES ('Vôlei');
 
 
+CREATE TABLE pedido 
+( 
+ idpedido INT PRIMARY KEY AUTO_INCREMENT,  
+ valor_total DOUBLE NOT NULL,  
+ idusuario INT NOT NULL,  
+ sts INT NOT NULL,
+ FOREIGN KEY(idusuario) REFERENCES usuario (idusuario)
+); 
 
 CREATE TABLE itens_pedido 
 ( 
@@ -105,15 +113,5 @@ CREATE TABLE itens_pedido
  FOREIGN KEY(idproduto) REFERENCES produto (idproduto),
  FOREIGN KEY(idusuario) REFERENCES usuario (idusuario)
 ); 
-
-CREATE TABLE pedido 
-( 
- idpedido INT PRIMARY KEY AUTO_INCREMENT,  
- valor_total DOUBLE NOT NULL,  
- idusuario INT NOT NULL,  
- sts INT NOT NULL,
- FOREIGN KEY(idusuario) REFERENCES usuario (idusuario)
-); 
-
 
 

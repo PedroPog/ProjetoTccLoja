@@ -14,7 +14,7 @@ namespace LojaCamisa.Repository.Interface
             _conexao = conf.GetConnectionString("Conexao");
         }
 
-        public IEnumerable<FormaPagamento> ObterTodosPag(int idUsuario)
+        public IEnumerable<FormaPagamento> ObterTodosPag(int id)
         {
             List<FormaPagamento> listFormas = new List<FormaPagamento>();
             using (var conexao = new MySqlConnection(_conexao))
@@ -22,7 +22,7 @@ namespace LojaCamisa.Repository.Interface
                 conexao.Open();
 
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM formapagamento WHERE idusuario=@idUsu;", conexao);
-                cmd.Parameters.Add("@idUsu", MySqlDbType.Int32).Value = idUsuario;
+                cmd.Parameters.Add("@idUsu", MySqlDbType.Int32).Value = id;
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 DataTable data = new DataTable();

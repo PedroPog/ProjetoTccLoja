@@ -8,6 +8,8 @@ public interface IPedidoRepository
     IEnumerable<Pedido> ObterTodosPedidos(int IdUsuario);
     Pedido ObterPedido(int IdPedido);
     void Cadastrar(Pedido pedido);
+    int CadastrarRetorno(Pedido pedido);
     void Atualizar(Pedido pedido);
+    void FinalizarPedido(int id);
     void Excluir(int IdPedido);
 }

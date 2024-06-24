@@ -11,7 +11,7 @@ Layout = null;
         </div>
     </div>
     <h1>Cadastrar Novo Cartão</h1>
-    <form asp-action="CadastrarPagamento" asp-controller="Home" method="post" id="paymentForm">
+    <form asp-action="CadastrarPagamento" asp-controller="Home" method="post">
         <input type="hidden" asp-for="IdUsuario" value="@_usuario.GetCliente().idUsuario"/>
         <div class="form-group">
             <label asp-for="NomeCompleto"></label>
@@ -20,12 +20,12 @@ Layout = null;
         </div>
         <div class="form-group">
             <label asp-for="Numero"></label>
-            <input asp-for="Numero" class="form-control" />
+            <input asp-for="Numero" class="form-control" maxlength="16"/>
             <span asp-validation-for="Numero" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Vencimento"></label>
-            <input asp-for="Vencimento" class="form-control" placeholder="MM/YY" />
+            <input asp-for="Vencimento" class="form-control" placeholder="MM/YY" maxlength="5"/>
             <span asp-validation-for="Vencimento" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -34,18 +34,27 @@ Layout = null;
             <span asp-validation-for="CVV" class="text-danger"></span>
         </div>
         <br />
-        <button type="submit" class="btn btn-success" id="submitBtn">Salvar</button>
-        <button type="button" class="btn btn-secondary" onclick="history.back();">Cancelar</button>
+        <button type="submit" class="btn btn-success" >Salvar</button>
+        <button type="button" class="btn btn-secondary" >Cancelar</button>
     </form>
 </div>
-
 <script>
-    // Habilitar botão de submit ao preencher corretamente todos os campos
-    $('#paymentForm').change(function () {
-        if ($(this).valid()) {
-            $('#submitBtn').prop('disabled', false);
-        } else {
-            $('#submitBtn').prop('disabled', true);
-        }
+    $(document).ready(function () {
+        $('#paymentForm').submit(function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: '@Url.Action("CadastrarPagamento", "Home")',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = '/Home/Pagamentos';
+                    } else {
+                        $('#content').load('/Home/CadastrarPagamento/');
+                    }
+                }
+            });
+        });
     });
 </script>

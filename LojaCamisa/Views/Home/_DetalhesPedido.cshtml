@@ -2,7 +2,7 @@
 
 <div class="container mt-5">
     <h1 class="text-center mb-4">Pedido Número: @Model.IdPedido</h1>
-    <h2 class="text-center mb-4">Usuário: @Model.IdUsuario</h2>
+    <h2 class="text-center mb-4">Status: @Model.Status</h2>
     <h3 class="text-center mb-5">Valor Total: R$ @Model.ValorTotal</h3>
     <div class="row">
         @foreach (var pedido in Model.Pedidos)

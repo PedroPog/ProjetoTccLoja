@@ -24,12 +24,13 @@
                             <a class="btn btn-primary disabled"  disabled><i class="fas fa-times"></i> @pedido.Status</a>
                         }else if (@pedido.Status == EstadoPedido.ENTREGUE)
                         {
-                            <a class="btn btn-primary disabled" 
-                               data-id="@pedido.IdPedido"><i class="fas fa-pencil-alt"></i> Confirmar Recebimento</a>
+                            <button class="btn btn-primary finalizaProfileButton" 
+                                    data-id="@pedido.IdPedido"><i class="fas fa-check"></i>Confirmar Recebimento</button>
                         }
                         else
                         {
-                            <a class="btn btn-primary editProfileButton" data-id="@pedido.IdPedido"><i class="fas fa-pencil-alt"></i> Detalhes</a>
+                            <button class="btn btn-primary editProfileButton"
+                                    data-id="@pedido.IdPedido"><i class="fas fa-pencil-alt"></i>Detalhes</button>
                             <a class="btn btn-danger"><i class="fas fa-trash-alt"></i> Solicitar Cancelamento</a>
                         }
                     </div>
@@ -37,19 +38,17 @@
             </div>
         }
     </div>
-    
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
         $('.editProfileButton').click(function () {
             var userId = $(this).data('id');
             $('#content').load('/Home/DetalhesPedido/' + userId);
         });
-    });
-    $(document).ready(function () {
-        $('.editProfileButton').click(function () {
+        $('.finalizaProfileButton').click(function () {
             var userId = $(this).data('id');
-            $('#content').load('/Home/DetalhesPedido/' + userId);
+            $('#content').load('/Home/FinalizarPedido/' + userId);
         });
     });
 </script>

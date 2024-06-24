@@ -1,0 +1,65 @@
+@inject LojaCamisa.Libraries.Login.LoginUsuario _usuario
+@model LojaCamisa.Models.Endereco
+@{
+Layout = null;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div id="validationSummary" class="alert alert-danger" style="display: none;"></div>
+        </div>
+    </div>
+    <h1>Cadastrar Novo Endereço</h1>
+    <form id="addressForm" method="post" asp-controller="Home" asp-action="CadastrarEndereco"a asp-area="">
+        <input type="hidden" asp-for="IdUsuario" value="@_usuario.GetCliente().idUsuario"/>
+        <div class="form-group">
+            <label asp-for="Cep"></label>
+            <input asp-for="Cep" maxlength="8" minlength="8" class="form-control" />
+            <span asp-validation-for="Cep" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EnderecoCompleto"></label>
+            <input asp-for="EnderecoCompleto" class="form-control" maxlength="50"/>
+            <span asp-validation-for="EnderecoCompleto" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Complemento"></label>
+            <input asp-for="Complemento" class="form-control" maxlength="30"/>
+            <span asp-validation-for="Complemento" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Telefone"></label>
+            <input asp-for="Telefone" maxlength="14" placeholder="91234-1234" class="form-control" />
+            <span asp-validation-for="Telefone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" asp-for="Responsavel" />
+            <label>O Endereço é o responsável da conta:</label>
+            <span asp-validation-for="Responsavel" class="text-danger"></span>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="button" class="btn btn-secondary">Cancelar</button>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#paymentForm').submit(function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: '@Url.Action("CadastrarEndereco", "Home")',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = '/Home/Endereco';
+                    } else {
+                        $('#content').load('/Home/CadastrarEndereco/'+response);
+                    }
+                }
+            });
+        });
+    });
+</script>

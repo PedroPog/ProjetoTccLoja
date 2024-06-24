@@ -61,8 +61,7 @@
         </div>
         @if (isCarrinhoVazio)
         {
-            <a asp-controller="Home" asp-action="FinalizarPedido" asp-area=""
-               type="button" class="btn btn-primary w-100 disabled">Finalizar Compra</a>
+            <a type="button" class="btn btn-primary w-100 disabled">Finalizar Compra</a>
         }
         else
         {
@@ -118,7 +117,3 @@
         atualizarTotalSubtotal();
     }
 </script>
-
-<style>
-    
-</style>

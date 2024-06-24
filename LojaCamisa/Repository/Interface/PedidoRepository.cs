@@ -45,6 +45,22 @@ public class PedidoRepository : IPedidoRepository
         }
     }
 
+    public void FinalizarPedido(int id)
+    {
+        using (var conexao = new MySqlConnection(_conexao))
+        {
+            conexao.Open();
+
+            MySqlCommand cmd = new MySqlCommand(
+                "UPDATE pedido SET sts = 0 WHERE idpedido = @idpedido;", conexao);
+
+            cmd.Parameters.AddWithValue("@idpedido", id);
+
+            cmd.ExecuteReader();
+            conexao.Close();
+        }
+    }
+    
     public IEnumerable<Pedido> ObterTodosPedidos(int IdUsuario)
     {
         List<Pedido> listPedido = new List<Pedido>();
@@ -124,6 +140,28 @@ public class PedidoRepository : IPedidoRepository
             cmd.Parameters.AddWithValue("@sts", pedido.Status);
 
             cmd.ExecuteNonQuery();
+        }
+    }
+
+    public int CadastrarRetorno(Pedido pedido)
+    {
+        using (var conexao = new MySqlConnection(_conexao))
+        {
+            conexao.Open();
+
+            MySqlCommand cmd = new MySqlCommand(
+                "INSERT INTO pedido (idpedido, idusuario, valor_total, sts) " +
+                "VALUES (default, @idusuario, @valor_total, @sts);", conexao);
+
+            cmd.Parameters.AddWithValue("@idusuario", pedido.IdUsuario);
+            cmd.Parameters.AddWithValue("@valor_total", pedido.ValorTotal);
+            cmd.Parameters.AddWithValue("@sts", pedido.Status);
+
+            cmd.ExecuteNonQuery();
+
+            // Obter o ID do pedido recém-criado
+            int idPedido = (int)cmd.LastInsertedId;
+            return idPedido;
         }
     }
 

@@ -46,9 +46,10 @@ public class ItensPedidoRepository : IItensPedidoRepository
             return listPedidos;
         }
     }
-
+    
     public ListaItensPedido ObterTodosPeditos(int IdPedido)
     {
+        //IdPedido = 1;
         List<ItensPedido> listaItens = obterItens(IdPedido);
         Pedido pedido = ObterPedido(IdPedido);
 
@@ -57,6 +58,7 @@ public class ItensPedidoRepository : IItensPedidoRepository
             IdPedido = pedido.IdPedido,
             IdUsuario = pedido.IdUsuario,
             ValorTotal = pedido.ValorTotal,
+            Status = pedido.Status,
             Pedidos = listaItens
         };
         return list;
@@ -167,11 +169,12 @@ public class ItensPedidoRepository : IItensPedidoRepository
             conexao.Open();
 
             MySqlCommand cmd = new MySqlCommand(
-                "INSERT INTO itens_pedido (iditem,idusuario,idpedido, nomeproduto, quantidade, preco_unitario) " +
-                "VALUES (default,@idusuario,@idpedido, @nomeproduto, @quantidade, @preco_unitario);", conexao);
+                "INSERT INTO itens_pedido (iditem,idusuario,idpedido,idproduto, nomeproduto, quantidade, preco_unitario) " +
+                "VALUES (default,@idusuario,@idpedido,@idproduto, @nomeproduto, @quantidade, @preco_unitario);", conexao);
 
             cmd.Parameters.AddWithValue("@idusuario", itensPedido.IdUsuario);
             cmd.Parameters.AddWithValue("@idpedido", itensPedido.IdPedido);
+            cmd.Parameters.AddWithValue("@idproduto", itensPedido.IdProduto);
             cmd.Parameters.AddWithValue("@nomeproduto", itensPedido.NomeProduto);
             cmd.Parameters.AddWithValue("@quantidade", itensPedido.Quantidade);
             cmd.Parameters.AddWithValue("@preco_unitario", itensPedido.PrecoUni);
@@ -203,5 +206,32 @@ public class ItensPedidoRepository : IItensPedidoRepository
     public void Excluir(int IdPedido)
     {
         throw new NotImplementedException();
+    }
+
+    public double ListarTotal(int id)
+    {
+        double valorTotal = 0.0;
+
+        using (var conexao = new MySqlConnection(_conexao))
+        {
+            conexao.Open();
+
+            MySqlCommand cmd = new MySqlCommand(
+                "SELECT quantidade, preco_unitario FROM itens_pedido WHERE idpedido = @idpedido", conexao);
+        
+            cmd.Parameters.AddWithValue("@idpedido", id);
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int quantidade = reader.GetInt32("quantidade");
+                    double precoUnitario = reader.GetDouble("preco_unitario");
+                    valorTotal += quantidade * precoUnitario;
+                }
+            }
+        }
+
+        return valorTotal;
     }
 }

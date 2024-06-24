@@ -4,7 +4,7 @@ namespace LojaCamisa.Repository.Interface.Contract
 {
     public interface IFormaPagamentoRepository
     {
-        IEnumerable<FormaPagamento> ObterTodosPag(int idUsuario);
+        IEnumerable<FormaPagamento> ObterTodosPag(int id);
         void Cadastrar(FormaPagamento formaPagamento);
         void Atualziar(FormaPagamento formaPagamento);
         void Excluir(int IdFormaPagamento);

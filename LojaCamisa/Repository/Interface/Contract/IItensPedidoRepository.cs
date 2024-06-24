@@ -10,4 +10,5 @@ public interface IItensPedidoRepository
     void Cadastrar(ItensPedido itensPedido);
     void Atualizar(ItensPedido itensPedido);
     void Excluir(int IdPedido);
+    double ListarTotal(int id);
 }
