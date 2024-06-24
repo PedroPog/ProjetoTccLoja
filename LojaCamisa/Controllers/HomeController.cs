@@ -56,6 +56,12 @@ namespace LojaCamisa.Controllers
             return View(carrinho);
         }
 
+        public IActionResult FinalizarPedido()
+        {
+            var carrinho = _carrinho.Consultar();
+            return View(carrinho);
+        }
+
         public IActionResult AdicionarItem(int id)
         {
             Produtos produtos = _produtoRepository.ObterProduto(id);
@@ -217,11 +223,10 @@ namespace LojaCamisa.Controllers
             // Se houver erros de validação, retorne para a view de cadastro com os dados fornecidos
             return PartialView("_CadastrarPagamento", formaPagamento);
         }
-        public IActionResult EditarPagamentos(int id = 0)
+        public IActionResult EditarPagamentos(int id)
         {
             FormaPagamento forma = _pagamentoRepository.ObterFormaPag(id);
             return PartialView("_EditarPagamentos", forma);
-            
         }
 
         [HttpPost]

@@ -24,8 +24,8 @@
                             <a class="btn btn-primary disabled"  disabled><i class="fas fa-times"></i> @pedido.Status</a>
                         }else if (@pedido.Status == EstadoPedido.ENTREGUE)
                         {
-                            <a class="btn btn-primary disabled" asp-action="" 
-                               asp-controller="Home" asp-area="" asp-route-id="@pedido.IdPedido"><i class="fas fa-pencil-alt"></i> Confirmar Recebimento</a>
+                            <a class="btn btn-primary disabled" 
+                               data-id="@pedido.IdPedido"><i class="fas fa-pencil-alt"></i> Confirmar Recebimento</a>
                         }
                         else
                         {
@@ -40,6 +40,12 @@
     
 </div>
 <script>
+    $(document).ready(function () {
+        $('.editProfileButton').click(function () {
+            var userId = $(this).data('id');
+            $('#content').load('/Home/DetalhesPedido/' + userId);
+        });
+    });
     $(document).ready(function () {
         $('.editProfileButton').click(function () {
             var userId = $(this).data('id');

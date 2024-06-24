@@ -24,8 +24,10 @@
                             Vencimento: @pagamento.Vencimento <br />
                             CVV: @pagamento.CVV
                         </p>
-                        <a class="btn btn-primary" asp-action="EditarPagamentos" 
-                           asp-controller="Home" asp-area="" asp-route-id="@pagamento.IdFormaPagamento"><i class="fas fa-pencil-alt"></i> Editar</a>
+                        <a class="btn btn-primary editPagamentoButton"
+                           data-id="@pagamento.IdFormaPagamento">
+                            <i class="fas fa-pencil-alt"></i> Editar
+                        </a>
                         <a class="btn btn-danger"><i class="fas fa-trash-alt"></i> Deletar</a>
                     </div>
                 </div>
@@ -38,6 +40,12 @@
     $(document).ready(function () {
         $('#cadaProfileButton').click(function () {
             $('#content').load('/Home/CadastrarPagamento/');
+        });
+    });
+    $(document).ready(function () {
+        $('.editPagamentoButton').click(function () {
+            var userId = $(this).data('id');
+            $('#content').load('/Home/EditarPagamentos/' + userId);
         });
     });
 </script>

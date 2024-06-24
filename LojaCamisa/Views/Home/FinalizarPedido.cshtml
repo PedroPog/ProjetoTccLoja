@@ -1,0 +1,60 @@
+@model IEnumerable<LojaCamisa.Models.ProdutoCarrinho>
+
+@{
+    ViewData["Title"] = "Carrinho";
+    double SubTotal = 0;
+    bool isCarrinhoVazio = !Model.Any();
+}
+<link rel="stylesheet" href="~/css/stylesCarrinho.css" asp-append-version="true" />
+<div class="row">
+    <!-- Coluna do Carrinho -->
+    <div class="col-md-8 scrollable-column" style="padding-left: 3vw;">
+        <h3>Finalizar Pedido</h3>
+        @foreach (var produto in Model)
+        {
+        <div class="card mb-3 m-auto shadow-sm" style="width: 35rem;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="/imagens/@produto.imagem" class="img-fluid rounded-start" alt="Imagem do Produto">
+                </div>
+                <div class="col-md-8 position-relative">
+                    <div class="card-body">
+                        <h2 class="card-title text-uppercase">@produto.nomeProduto</h2>
+                        <p class="card-text"><strong>Preço:</strong> @produto.preco.ToString("C")</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex">
+                <div class="d-flex align-items-center w-85">
+                    <span>Quantidade: @produto.quantidade</span>
+                </div>
+                <div class="d-flex w-25 align-items-center justify-content-end">
+                    <span class="card-text fw-bold" id="subtotal-@produto.idProduto" data-preco="@produto.preco">R$ @(produto.quantidade * produto.preco)</span>
+                </div>
+            </div>
+        </div>
+        SubTotal += produto.quantidade * produto.preco;
+        }
+        @if (isCarrinhoVazio)
+        {
+        <div class="d-flex justify-content-center align-items-center text-secondary" style="height: 80vh;">
+            <h2>Carrinho vazio</h2>
+        </div>
+        }
+    </div>
+
+    <!-- Coluna Fixa do Resumo -->
+    <div class="col-md-4 fixed-column p-4">
+        <h3>Resumo da Compra</h3>
+        <p><strong>Subtotal:</strong> <span id="totalSubtotal">@SubTotal.ToString("C")</span></p>
+        <!--<p>Frete: Calcular</p>-->
+        <div class="mb-3">
+            <label for="cupom" class="form-label fw-bold">Cupom de Desconto :</label>
+            <input type="text" class="form-control w-100 mw-100" maxlength="8"
+                   id="cupom" placeholder="Digite seu cupom" style="text-transform: uppercase;">
+        </div>
+        
+        <a asp-controller="Home" asp-action="FinalizarPedido" asp-area=""
+           type="button" class="btn btn-primary w-100">Finalizar Compra</a>
+    </div>
+</div>
