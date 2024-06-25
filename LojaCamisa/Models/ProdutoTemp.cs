@@ -12,6 +12,5 @@
         public string marca { get; set; }
         public bool nacional { get; set; }
         public string modalidade { get; set; }
-        public List<string> imagem { get; set; }
     }
 }

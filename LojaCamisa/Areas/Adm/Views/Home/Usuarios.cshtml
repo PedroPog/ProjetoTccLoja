@@ -1,7 +1,48 @@
-﻿
+﻿@using LojaCamisa.Models.Constant
+@model IEnumerable<LojaCamisa.Models.Usuario>
 @{
-    ViewData["Title"] = "Usuarios";
+    ViewData["Title"] = "ProdutoList";
 }
 
-<h1>Usuarios</h1>
+<h1>Lista de Usuarios</h1>
 
+<p>
+    <a asp-area="Adm" asp-controller="Home" asp-action="CadastrarProduto">Cadastrar Usuario</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idUsuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.std)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.idUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.std)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

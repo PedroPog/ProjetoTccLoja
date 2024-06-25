@@ -133,11 +133,12 @@ namespace LojaCamisa.Repository.Interface
             throw new NotImplementedException();
         }
 
-        public void CadastrarProduto(ProdutoTemp produtos,List<IFormFile> file)
+        public int CadastrarProduto(ProdutoTemp produtos)
         {
             //int id = produtos.idProduto;
             using (var conexao = new MySqlConnection(_conexao))
             {
+                int id;
                 conexao.Open();
 
                 string insertProdutoQuery = "INSERT INTO produto (idproduto,nome, descricao, lancamento, quantidade, preco, sts, idmarca, nacional, idmodalidade) " +
@@ -156,28 +157,31 @@ namespace LojaCamisa.Repository.Interface
                     cmd.Parameters.Add("@idmodalidade", MySqlDbType.VarChar).Value = produtos.modalidade;
 
                     cmd.ExecuteNonQuery();
-                    produtos.idProduto = (int)cmd.LastInsertedId;  // Get the inserted product ID
+                    id = produtos.idProduto = (int)cmd.LastInsertedId;  // Get the inserted product ID
                 }
 
                 conexao.Close();
+                return id;
+            }
+        }
 
-                for (int i = 0; i < file.Count; i++)
+        public void CadastrarImgs(IFormFile file,int id)
+        {
+            using (var conexao = new MySqlConnection(_conexao))
+            {
+                conexao.Open();
+
+                string insertImagemQuery = "INSERT INTO imagens (idimagem, idproduto, urlimagem) " +
+                                           "VALUES (default, @idproduto, @urlimagem);";
+
+                using (MySqlCommand imgCmd = new MySqlCommand(insertImagemQuery, conexao))
                 {
-                    conexao.Open();
-
-                    string insertImagemQuery = "INSERT INTO imagens (idimagem, idproduto, urlimagem) " +
-                                               "VALUES (default, @idproduto, @urlimagem);";
-
-                    using (MySqlCommand imgCmd = new MySqlCommand(insertImagemQuery, conexao))
-                    {
-                        imgCmd.Parameters.Add("@urlimagem", MySqlDbType.VarChar).Value = Path.GetFileName(file[i].FileName);
-                        imgCmd.Parameters.Add("@idproduto", MySqlDbType.VarChar).Value = produtos.idProduto;
-
-                        imgCmd.ExecuteNonQuery();
-                    }
-
-                    conexao.Close();
+                    imgCmd.Parameters.Add("@urlimagem", MySqlDbType.VarChar).Value = Path.GetFileName(file.FileName);
+                    imgCmd.Parameters.Add("@idproduto", MySqlDbType.VarChar).Value = id;
+                    imgCmd.ExecuteNonQuery();
                 }
+
+                conexao.Close();
             }
         }
 

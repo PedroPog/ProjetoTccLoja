@@ -34,7 +34,7 @@ namespace LojaCamisa.Areas.Adm.Controllers
 
         public IActionResult Usuarios()
         {
-            return View();
+            return View(_usuarioRepository.ObterTodosUsuarios());
         }
 
         public IActionResult Pedidos()
@@ -65,7 +65,11 @@ namespace LojaCamisa.Areas.Adm.Controllers
                     }
                 }
 
-                _produtoRepository.CadastrarProduto(produtos, files);
+                int idProduto = _produtoRepository.CadastrarProduto(produtos);
+                foreach (var file in files)
+                {
+                    _produtoRepository.CadastrarImgs(file,idProduto);
+                }
                 TempData["MSG_S"] = "Produto cadastrado com sucesso!";
                 return RedirectToAction(nameof(ProdutoList));
             }

@@ -6,7 +6,8 @@ namespace LojaCamisa.Repository.Interface.Contract
     {
         IEnumerable<Produtos> ObterTodosProdutos();
         Produtos ObterProduto(int id);
-        void CadastrarProduto(ProdutoTemp produtos,List<IFormFile> file);
+        int CadastrarProduto(ProdutoTemp produtos);
+        void CadastrarImgs(IFormFile file, int id);
         void Atualizar(Produtos produtos);
         void AtualizarEstoque(int Quantidade);
         void Excluir(int id);
