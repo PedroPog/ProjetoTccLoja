@@ -1,0 +1,60 @@
+:root {
+    --primary-color: #005248;
+    --secondary-color: #4B8178;
+    --tertiary-color: #C3FCF2;
+    --highlight-color: #57d1bd;
+    --highlight-hover-color: #C3FCF2;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+body {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.navbar, .sidebar {
+    background-color: var(--secondary-color);
+}
+
+.navbar a.nav-link, .sidebar a.nav-link {
+    color: var(--tertiary-color);
+}
+
+.navbar a.nav-link:hover, .sidebar a.nav-link:hover {
+    background-color: var(--highlight-hover-color);
+    color: var(--secondary-color);
+}
+
+.navbar-brand {
+    color: var(--tertiary-color);
+}
+
+.sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: var(--secondary-color);
+}
+
+.nav-link.active {
+    background-color: var(--highlight-color);
+    color: var(--primary-color);
+}

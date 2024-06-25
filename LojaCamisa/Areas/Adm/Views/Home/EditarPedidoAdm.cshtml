@@ -1,0 +1,58 @@
+@model LojaCamisa.Models.PedidoViewModel
+
+@{
+ViewData["Title"] = "EditPedido";
+}
+<link rel="stylesheet" href="~/css/stylesProdAdd.css" asp-append-version="true" />
+<h1>Edit Pedido</h1>
+<hr />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="EditarPedido" asp-controller="Pedido" method="post" class="p-4 border rounded shadow-sm" style="background-color: var(--tertiary-color);">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Pedido.IdPedido" class="form-control disabled" />
+                <input asp-for="Pedido.IdUsuario" class="form-control disabled" />
+                <div class="mb-3">
+                    <label asp-for="Pedido.ValorTotal" class="form-label"></label>
+                    <input asp-for="Pedido.ValorTotal" class="form-control" />
+                    <span asp-validation-for="Pedido.ValorTotal" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Pedido.Status" class="form-label"></label>
+                    <select asp-for="Pedido.Status" class="form-control">
+                        @foreach (var status in Enum.GetValues(typeof(LojaCamisa.Models.Constant.EstadoPedido)))
+                        {
+                            <option value="@status">@status</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Pedido.Status" class="text-danger"></span>
+                </div>
+
+                <h3 class="mt-4">Itens do Pedido</h3>
+                <div class="items-container border p-3 mb-3">
+                    @foreach (var item in Model.ItensPedidos)
+                    {
+                    <div class="item-box border rounded p-2 mb-2">
+                        <div class="mb-2">
+                            <strong>Produto:</strong> @item.NomeProduto
+                        </div>
+                        <div class="mb-2">
+                            <strong>Quantidade:</strong> @item.Quantidade
+                        </div>
+                        <div class="mb-2">
+                            <strong>Preço Unitário:</strong> @item.PrecoUni.ToString("C")
+                        </div>
+                    </div>
+                    }
+                </div>
+
+                @ViewBag.msg
+                <div class="d-flex justify-content-between">
+                    <a asp-area="" asp-controller="Pedido" asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

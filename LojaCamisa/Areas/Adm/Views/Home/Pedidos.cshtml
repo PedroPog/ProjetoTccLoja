@@ -1,7 +1,33 @@
-﻿
+﻿@using LojaCamisa.Models.Constant
+@model IEnumerable<LojaCamisa.Models.Pedido>
 @{
-    ViewData["Title"] = "Pedidos";
+    ViewData["Title"] = "ProdutoList";
 }
+<link rel="stylesheet" href="~/css/stylesPedList.css" asp-append-version="true" />
 
-<h1>Pedidos</h1>
-
+<div class="container mt-5 pt-5">
+    <h1>Lista de Pedidos</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.IdPedido)</th>
+            <th>@Html.DisplayNameFor(model => model.Status)</th>
+            <th>@Html.DisplayNameFor(model => model.ValorTotal)</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.IdPedido)</td>
+                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                <td>@Html.DisplayFor(modelItem => item.ValorTotal)</td>
+                <td>
+                    <a asp-action="EditarPedidoAdm"  asp-area="Adm" asp-controller="Home" asp-route-id="@item.IdPedido" class="btn btn-sm btn-warning">Editar</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

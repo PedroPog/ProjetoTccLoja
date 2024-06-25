@@ -1,0 +1,49 @@
+:root {
+    --primary-color: #005248;
+    --secondary-color: #4B8178;
+    --tertiary-color: #C3FCF2;
+    --highlight-color: #57d1bd;
+    --highlight-hover-color: #C3FCF2;
+}
+
+body {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+h1 {
+    color: var(--secondary-color);
+}
+
+.form-label {
+    color: var(--primary-color);
+}
+
+.btn-primary {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--highlight-hover-color);
+    border-color: var(--highlight-hover-color);
+}
+
+.form-control:focus {
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 0 0.2rem rgba(87, 209, 189, 0.25);
+}
+
+.img-thumbnail {
+    border-color: var(--highlight-color);
+}
+
+.btn-danger {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-danger:hover {
+    background-color: var(--highlight-hover-color);
+    border-color: var(--highlight-hover-color);
+}

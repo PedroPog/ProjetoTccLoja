@@ -7,111 +7,87 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v3.8.5">
+    <meta name="description" content="Realizado tcc solo">
+    <meta name="author" content="PedroPog full-stack">
+    <meta name="generator" content="1.0">
     <title>@ViewBag.Title</title>
 
     <link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css" />
-
-    <!-- Bootstrap core CSS -->
+    <link href="~/css/stylesLayoutAdm.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="~/resources/lib/bootstrap-4.2.1-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/resources/lib/pagedlist/PagedList.css" rel="stylesheet" type="text/css" />
-
-    @*  <link href="~/resources/lib/pagedlist/PagedList.css" rel="stylesheet" type="text/css" /> *@
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @@media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
-    <!-- Custom styles for this template -->
     <link href="~/resources/lib/dashboard/dashboard.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0 text-white">Painel Geral</a>
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" asp-area="" asp-action="Logout" asp-controller="Home"><span>@_usuario.GetCliente().nome </span> Sair</a>
-            </li>
-        </ul>
-    </nav>
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0 text-white">Painel Geral</a>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" asp-area="" asp-action="LogoutCliente" asp-controller="Home"><span>@_usuario.GetCliente().nome </span> Sair</a>
+        </li>
+    </ul>
+</nav>
 
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Home" asp-action="Index" asp-area="Adm">
-                                <span data-feather="home"></span>
-                                Painel de Controle
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="ProdutoList" asp-controller="Home" asp-area="Adm">
-                                <span data-feather="archive"></span>
-                                Produtos
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="Usuarios" asp-controller="Home" asp-area="Adm">
-                                <span data-feather="users"></span>
-                                Usuarios
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Pedidos" asp-area="Adm">
-                                <span data-feather="file"></span>
-                                Pedidos
-                            </a>
-                        </li>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-controller="Home" asp-action="Index" asp-area="Adm">
+                            <span data-feather="home"></span>
+                            Painel de Controle
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="ProdutoList" asp-controller="Home" asp-area="Adm">
+                            <span data-feather="archive"></span>
+                            Produtos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Usuarios" asp-controller="Home" asp-area="Adm">
+                            <span data-feather="users"></span>
+                            Usuarios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Pedidos" asp-area="Adm">
+                            <span data-feather="file"></span>
+                            Pedidos
+                        </a>
+                    </li>
+                </ul>
 
-                    </ul>
+                <ul class="nav flex-column mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Person" asp-area="Adm">
+                            <span data-feather="file-text"></span>
+                            Meu Usuario
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">
+                            <span data-feather="file-text"></span>
+                            Relatorios
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Person" asp-area="Adm">
-                                <span data-feather="file-text"></span>
-                                Meu Usuario
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">
-                                <span data-feather="file-text"></span>
-                                Relatorios
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-
-                @RenderBody()
-
-            </main>
-        </div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            @RenderBody()
+        </main>
     </div>
-    <script src="~/resources/lib/jquery3.3.1/jquery-3.3.1.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/resources/lib/jquery3.3.1/jquery-3.3.1.min.js"><\/script>')</script>
-    <script src="~/resources/lib/mask/jquery.mask.min.js"></script>
-    <script src="~/resources/lib/bootstrap-4.2.1-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/resources/lib/feather/feather.js"></script>
-    <script src="~/resources/lib/charts/charts.js"></script>
-    <script src="~/resources/lib/dashboard/dashboard.js"></script>
-    <script src="~/resources/js/Actions.js"></script>
+</div>
+<script src="~/resources/lib/jquery3.3.1/jquery-3.3.1.min.js"></script>
+<script>window.jQuery || document.write('<script src="/resources/lib/jquery3.3.1/jquery-3.3.1.min.js"><\/script>')</script>
+<script src="~/resources/lib/mask/jquery.mask.min.js"></script>
+<script src="~/resources/lib/bootstrap-4.2.1-dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/resources/lib/feather/feather.js"></script>
+<script src="~/resources/lib/charts/charts.js"></script>
+<script src="~/resources/lib/dashboard/dashboard.js"></script>
+<script src="~/resources/js/Actions.js"></script>
 </body>
 </html>

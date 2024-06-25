@@ -1,15 +1,15 @@
-﻿@model LojaCamisa.Models.ProdutoTemp
+@model LojaCamisa.Models.Produtos
 
 @{
-    ViewData["Title"] = "ProdutoList";
+    ViewData["Title"] = "EditProduto";
 }
 <link rel="stylesheet" href="~/css/stylesProdAdd.css" asp-append-version="true" />
-<h1>ProdutoList</h1>
+<h1>EditProduto</h1>
 <hr />
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form asp-action="CadastrarProduto" asp-controller="Home" method="post" enctype="multipart/form-data" class="p-4 border rounded shadow-sm" style="background-color: var(--tertiary-color);">
+            <form asp-action="EditarProduto" asp-controller="Home" method="post" enctype="multipart/form-data" class="p-4 border rounded shadow-sm" style="background-color: var(--tertiary-color);">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="mb-3">
                     <label asp-for="nomeProduto" class="form-label"></label>
@@ -20,7 +20,15 @@
                     <label for="fileInput" class="form-label">Upload Images</label>
                     <input type="file" name="files" id="fileInput" multiple class="form-control" />
                 </div>
-                <div id="imagePreview" class="d-flex flex-wrap mb-3"></div>
+                <div id="imagePreview" class="d-flex flex-wrap mb-3">
+                    @foreach (var image in Model.imagem)
+                    {
+                        <div style="position: relative; display: inline-block; margin: 5px;">
+                            <img src="/imagens/@image" style="width: 100px; height: 100px; object-fit: cover;" />
+                            <button type="button" style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; border-radius: 50%; cursor: pointer;" onclick="removeImage('@image')">X</button>
+                        </div>
+                    }
+                </div>
                 <div class="mb-3">
                     <label asp-for="lancamento" class="form-label"></label>
                     <input asp-for="lancamento" class="form-control" />
@@ -64,7 +72,7 @@
                 @ViewBag.msg
                 <div class="d-flex justify-content-between">
                     <a asp-area="Adm" asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to List</a>
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Update" class="btn btn-primary" />
                 </div>
             </form>
         </div>
@@ -72,6 +80,7 @@
 </div>
 <script>
     let selectedFiles = [];
+    let existingImages = Array.from(document.querySelectorAll('#imagePreview img')).map(img => img.src);
 
     document.getElementById('fileInput').addEventListener('change', function () {
         const imagePreview = document.getElementById('imagePreview');
@@ -122,5 +131,10 @@
         const dataTransfer = new DataTransfer();
         selectedFiles.forEach(file => dataTransfer.items.add(file));
         document.getElementById('fileInput').files = dataTransfer.files;
+    }
+
+    function removeImage(url) {
+        existingImages = existingImages.filter(image => image !== url);
+        document.querySelector(`#imagePreview img[src='${url}']`).parentElement.remove();
     }
 </script>

@@ -162,6 +162,38 @@ public class ItensPedidoRepository : IItensPedidoRepository
         }
     }
 
+    public IEnumerable<ItensPedido> ObterItemPedidos(int id)
+    {
+        List<ItensPedido> listPedidos = new List<ItensPedido>();
+        using (var conexao = new MySqlConnection(_conexao))
+        {
+            conexao.Open();
+
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM itens_pedido WHERE idpedido=@idpedido;", conexao);
+            cmd.Parameters.AddWithValue("@idpedido", id);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+            DataTable data = new DataTable();
+            adapter.Fill(data);
+
+            foreach (DataRow dr in data.Rows)
+            {
+                ItensPedido itensPedido = new ItensPedido
+                {
+                    IdItem = (int)dr["iditem"],
+                    IdUsuario = (int)dr["idusuario"],
+                    IdPedido = (int)dr["idpedido"],
+                    NomeProduto = (string)dr["nomeproduto"],
+                    Quantidade = (int)dr["quantidade"],
+                    PrecoUni = (double)dr["preco_unitario"],
+                };
+                    
+                listPedidos.Add(itensPedido);
+            }
+
+            return listPedidos;
+        }
+    }
+
     public void Cadastrar(ItensPedido itensPedido)
     {
         using (var conexao = new MySqlConnection(_conexao))

@@ -2,64 +2,40 @@
 @{
     ViewData["Title"] = "ProdutoList";
 }
+<link rel="stylesheet" href="~/css/stylesProdList.css" asp-append-version="true" />
+<h1 class="text-center my-4">Lista de Produtos</h1>
 
-<h1>Lista de Produtos</h1>
-
-<p>
-    <a asp-area="Adm" asp-controller="Home" asp-action="CadastrarProduto">Cadastrar Produto</a>
-</p>
-<table class="table">
-    <thead>
+<div class="container">
+    <p>
+        <a asp-area="Adm" asp-controller="Home" asp-action="CadastrarProduto" class="btn btn-primary">Cadastrar Produto</a>
+    </p>
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.idProduto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.nomeProduto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.preco)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.marca)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.quantidade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.status)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.idProduto)</th>
+            <th>@Html.DisplayNameFor(model => model.nomeProduto)</th>
+            <th>@Html.DisplayNameFor(model => model.preco)</th>
+            <th>@Html.DisplayNameFor(model => model.marca)</th>
+            <th>@Html.DisplayNameFor(model => model.quantidade)</th>
+            <th>@Html.DisplayNameFor(model => model.status)</th>
+            <th>Actions</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.idProduto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.nomeProduto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.preco)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.marca)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.quantidade)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.status)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.idProduto)</td>
+            <td>@Html.DisplayFor(modelItem => item.nomeProduto)</td>
+            <td>@Html.DisplayFor(modelItem => item.preco)</td>
+            <td>@Html.DisplayFor(modelItem => item.marca)</td>
+            <td>@Html.DisplayFor(modelItem => item.quantidade)</td>
+            <td>@Html.DisplayFor(modelItem => item.status)</td>
+            <td>
+                <a asp-action="EditarProduto"  asp-area="Adm" asp-controller="Home" asp-route-id="@item.idProduto" class="btn btn-sm btn-warning">Editar</a>
+            </td>
+        </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

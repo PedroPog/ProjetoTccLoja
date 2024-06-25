@@ -1,0 +1,76 @@
+:root {
+    --primary-color: #005248;
+    --secondary-color: #4B8178;
+    --tertiary-color: #C3FCF2;
+    --highlight-color: #57d1bd;
+    --highlight-hover-color: #C3FCF2;
+}
+
+body {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+h1 {
+    color: var(--secondary-color);
+}
+
+.btn-primary {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--highlight-hover-color);
+    border-color: var(--highlight-hover-color);
+}
+
+.btn-warning {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-warning:hover {
+    background-color: var(--highlight-hover-color);
+    border-color: var(--highlight-hover-color);
+}
+
+.btn-info {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+}
+
+.btn-info:hover {
+    background-color: var(--highlight-hover-color);
+    border-color: var(--highlight-hover-color);
+}
+
+.btn-danger {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-danger:hover {
+    background-color: var(--highlight-hover-color);
+    border-color: var(--highlight-hover-color);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: var(--tertiary-color);
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: var(--highlight-hover-color);
+    cursor: default;
+    
+}
+
+.table-dark {
+    background-color: var(--secondary-color);
+}
+
+.table-dark th {
+    color: var(--tertiary-color);
+}

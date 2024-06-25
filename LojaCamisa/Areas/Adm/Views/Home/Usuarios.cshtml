@@ -3,46 +3,57 @@
 @{
     ViewData["Title"] = "ProdutoList";
 }
+<link rel="stylesheet" href="~/css/stylesUsuList.css" asp-append-version="true" />
 
-<h1>Lista de Usuarios</h1>
 
-<p>
-    <a asp-area="Adm" asp-controller="Home" asp-action="CadastrarProduto">Cadastrar Usuario</a>
-</p>
-<table class="table">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.idUsuario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.std)
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
+<div class="container mt-5 pt-5">
+    <h1>Lista de Usuarios</h1>
+    <p>
+        <a class="btn btn-primary" asp-area="Adm" asp-controller="Home" asp-action="CadastrarProduto">Cadastrar Usuario</a>
+    </p>
+    <table class="table table-striped">
+        <thead>
         <tr>
+            <th>@Html.DisplayNameFor(model => model.idUsuario)</th>
+            <th>@Html.DisplayNameFor(model => model.nome)</th>
+            <th>@Html.DisplayNameFor(model => model.std)</th>
+            <th>@Html.DisplayNameFor(model => model.tipo)</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.idUsuario)</td>
+            <td>@Html.DisplayFor(modelItem => item.nome)</td>
             <td>
-                @Html.DisplayFor(modelItem => item.idUsuario)
+                @if (item.std == 1)
+                {
+                @SituacaoConta.Ativo
+                }
+                else
+                {
+                @SituacaoConta.Desativado
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.nome)
+                @if (item.tipo == 1)
+                {
+                @TipoUsuario.Gerente
+                }
+                else
+                {
+                @TipoUsuario.Comum
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.std)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new { id = item.idUsuario }) |
+                @Html.ActionLink("Details", "Details", new { id = item.idUsuario }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.idUsuario })
             </td>
         </tr>
-    }
-    </tbody>
-</table>
+        }
+        </tbody>
+    </table>        
+</div>

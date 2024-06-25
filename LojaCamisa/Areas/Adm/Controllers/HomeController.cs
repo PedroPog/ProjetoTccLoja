@@ -14,10 +14,15 @@ namespace LojaCamisa.Areas.Adm.Controllers
     {
         private IUsuarioRepository _usuarioRepository;
         private IProdutoRepository _produtoRepository;
+        private IPedidoRepository _pedidoRepository;
+        private IItensPedidoRepository _itensPedidoRepository;
         private LoginUsuario _loginUsuario;
 
-        public HomeController(IUsuarioRepository usuarioRepository, IProdutoRepository produtoRepository)
+        public HomeController(IUsuarioRepository usuarioRepository, IProdutoRepository produtoRepository,
+            IPedidoRepository pedidoRepository,IItensPedidoRepository itensPedidoRepository)
         {
+            _itensPedidoRepository = itensPedidoRepository;
+            _pedidoRepository = pedidoRepository;
             _usuarioRepository = usuarioRepository;
             _produtoRepository = produtoRepository;
         }
@@ -39,12 +44,38 @@ namespace LojaCamisa.Areas.Adm.Controllers
 
         public IActionResult Pedidos()
         {
-            return View();
+            return View(_pedidoRepository.ObterTodosPedidosAdm());
+        }
+
+        public IActionResult EditarPedidoAdm(int id)
+        {
+            Pedido pedido = _pedidoRepository.ObterPedido(id);
+            List<ItensPedido> itensPedidos = (List<ItensPedido>)_itensPedidoRepository.ObterItemPedidos(pedido.IdPedido);
+            PedidoViewModel model = new PedidoViewModel()
+            {
+                Pedido = pedido,
+                ItensPedidos = itensPedidos
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult EditarPedidoAdm(PedidoViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
 
         public IActionResult Person()
         {
             return View();
+        }
+
+        public IActionResult EditarProduto(int id)
+        {
+            return View(_produtoRepository.ObterProduto(id));
         }
 
         public IActionResult CadastrarProduto()
@@ -96,11 +127,11 @@ namespace LojaCamisa.Areas.Adm.Controllers
         {
             return View();
         }
-        [ClienteAuth]
+        /*[ClienteAuth]
         public IActionResult Logout()
         {
             _loginUsuario.Logout();
             return RedirectToAction("Login", "Home");
-        }
+        }*/
     }
 }
