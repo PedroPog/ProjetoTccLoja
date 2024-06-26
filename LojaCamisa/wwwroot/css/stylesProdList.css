@@ -60,11 +60,12 @@ h1 {
 .table-striped > tbody > tr:nth-of-type(odd) {
     background-color: var(--tertiary-color);
 }
+.table-striped > tbody > tr:nth-of-type(even) {
+    background-color: var(--tertiary-color);
+}
 
 .table-hover > tbody > tr:hover {
-    background-color: var(--highlight-hover-color);
     cursor: default;
-    
 }
 
 .table-dark {

@@ -42,8 +42,13 @@
                     <span asp-validation-for="status" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="marca" class="form-label"></label>
-                    <input asp-for="marca" class="form-control" />
+                    <label class="form-label">Selecione uma marca</label>
+                    <select asp-for="marca" class="form-control">
+                        <option value="1">Nike</option>
+                        <option value="2">Adidas</option>
+                        <option value="3">Puma</option>
+                        <option value="4">Under Armour</option>
+                    </select>
                     <span asp-validation-for="marca" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
@@ -52,8 +57,12 @@
                     <span asp-validation-for="nacional" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="modalidade" class="form-label"></label>
-                    <input asp-for="modalidade" class="form-control" />
+                    <label asp-for="modalidade" class="form-label">Selecione um Esporte</label>
+                    <select asp-for="modalidade" class="form-control">
+                        <option value="1">Futebol</option>
+                        <option value="2">Basketball</option>
+                        <option value="3">Vôlei</option>
+                    </select>
                     <span asp-validation-for="modalidade" class="text-danger"></span>
                 </div>
                 <div class="mb-3">

@@ -11,11 +11,11 @@ ViewData["Title"] = "EditPedido";
         <div class="col-md-8">
             <form asp-action="EditarPedido" asp-controller="Pedido" method="post" class="p-4 border rounded shadow-sm" style="background-color: var(--tertiary-color);">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input asp-for="Pedido.IdPedido" class="form-control disabled" />
-                <input asp-for="Pedido.IdUsuario" class="form-control disabled" />
+                <input type="hidden" asp-for="Pedido.IdPedido" class="form-control disabled" />
+                <input type="hidden" asp-for="Pedido.IdUsuario" class="form-control disabled" />
                 <div class="mb-3">
                     <label asp-for="Pedido.ValorTotal" class="form-label"></label>
-                    <input asp-for="Pedido.ValorTotal" class="form-control" />
+                    <label class="form-control">@Model.Pedido.ValorTotal</label>
                     <span asp-validation-for="Pedido.ValorTotal" class="text-danger"></span>
                 </div>
                 <div class="mb-3">

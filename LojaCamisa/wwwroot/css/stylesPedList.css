@@ -35,7 +35,7 @@ body {
 }
 
 .table th, .table td {
-    border: 1px solid var(--secondary-color);
+    /*border: 1px solid var(--secondary-color);*/
 }
 
 .table th {
